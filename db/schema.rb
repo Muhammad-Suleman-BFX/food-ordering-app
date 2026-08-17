@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_17_000002) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_17_000003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "branch_menu_items", force: :cascade do |t|
+    t.bigint "branch_id", null: false
+    t.bigint "menu_item_id", null: false
+    t.boolean "menu_item_availability", default: true, null: false
+    t.decimal "menu_item_price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id", "menu_item_id"], name: "index_branch_menu_items_on_branch_id_and_menu_item_id", unique: true
+    t.index ["branch_id"], name: "index_branch_menu_items_on_branch_id"
+    t.index ["menu_item_id"], name: "index_branch_menu_items_on_menu_item_id"
+    t.check_constraint "menu_item_price > 0::numeric", name: "menu_item_price_numeric_positive"
+  end
 
   create_table "branches", force: :cascade do |t|
     t.string "name", null: false
@@ -30,4 +43,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_17_000002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "branch_menu_items", "branches"
+  add_foreign_key "branch_menu_items", "menu_items"
 end
