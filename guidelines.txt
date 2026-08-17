@@ -1,0 +1,117 @@
+Week 3: Branch-Based Food Ordering API
+ 
+Build a small Ruby on Rails application with a simple frontend for ordering food from different restaurant branches.
+ 
+Goal
+ 
+Create an API-first food-ordering application where the available menu and prices depend on the selected branch. 
+ 
+A customer can choose delivery or pickup, view the correct menu, add available items to a cart, and place an order.
+ 
+Keep the interface simple. The focus should be on database design, model interactions, validations, API design, and test-driven development.
+ 
+Core Requirements
+ 
+1. Branches
+ 
+Create a Branch model with fields such as:
+Name
+Address
+Latitude
+Longitude
+All branch data must be stored in the database.
+ 
+2. Menu Items and Branch Pricing
+ 
+Create a central MenuItem model for food items, for example:
+Name
+Description
+Base availability status
+A menu item should not have one global price. Instead, create a join model such as BranchMenuItem that connects a branch and a menu item.
+ 
+This model should store:
+Branch
+Menu item
+Price for that branch
+Availability status
+This allows the same item to have different prices or availability at different branches.
+ 
+3. Ordering Flow
+ 
+Support two order types:
+Pickup: The customer selects a branch directly.
+Delivery: The customer provides a GPS location (latitude and longitude). The system should select the nearest branch and show that branch’s available menu.
+The customer should only be able to order items that are available at the selected branch.
+ 
+4. Cart and Orders
+Create the required models for:
+Cart
+Cart items
+Order
+Order items
+An order item must store the item name and price at the time the order is placed. This ensures that future menu-price changes do not affect existing orders.
+ 
+Cart calculations should use the branch-specific price.
+ 
+5. Validations
+ 
+Add appropriate validations, including:
+Required fields
+Positive prices
+Positive quantities
+Unique branch/menu-item combinations
+An unavailable item cannot be added to the cart or ordered
+A cart cannot contain items from different branches
+An order cannot be placed with an empty cart
+API-First Development
+ 
+Build and test the API before starting the frontend.
+ 
+Suggested endpoints:
+GET /api/branches
+GET /api/branches/:id/menu
+GET /api/branches/nearest?latitude=...&longitude=...
+POST /api/carts
+POST /api/carts/:id/items
+PATCH /api/carts/:id/items/:item_id
+DELETE /api/carts/:id/items/:item_id
+GET /api/carts/:id
+POST /api/carts/:id/checkout
+Use clear JSON responses and suitable HTTP status codes. Return useful validation errors when a request cannot be completed.
+ 
+Frontend
+ 
+After the API is complete, build a minimal frontend that allows a user to:
+Choose Pickup or Delivery.
+Select a branch or enter a GPS location.
+View the menu for the chosen/nearest branch.
+Add, update, and remove cart items.
+View the cart total.
+Place an order and see an order confirmation.
+The frontend does not need advanced styling. Prioritize correct functionality and a clean, understandable user flow.
+ 
+Testing
+ 
+Follow TDD as much as possible:
+Write model tests before or alongside the model implementation.
+Test validations and important model relationships.
+Add request tests for key API endpoints.
+Test unavailable items, branch-specific pricing, nearest-branch selection, cart validation, and checkout.
+Suggested Delivery Plan
+ 
+Days 1–2: Design the database schema, create models, migrations, associations, validations, and seed data.
+Days 3–4: Implement the API and request tests.
+Day 5: Implement the simple frontend.
+Day 6: Add tests, handle edge cases, and fix issues.
+Day 7: Final cleanup, update the README, and prepare a short demonstration.
+ 
+Deliverables
+Rails project source code
+Database seed data for multiple branches, menu items, prices, and unavailable items
+Test suite
+README containing:
+Setup instructions
+Database-model explanation
+API endpoint documentation with sample requests/responses
+Assumptions and design decisions
+This is intentionally a small project, but it covers important Rails fundamentals: database modelling, associations, validations, APIs, testing, and frontend integration. If anything is unclear while working on it, please raise questions early.
