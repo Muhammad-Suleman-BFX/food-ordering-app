@@ -1,0 +1,24 @@
+<%= form_with model: menu_item do |form| %>
+  <% if form.object.errors.any? %>
+    <div class="error"><%= form.object.errors.full_messages.first %></div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, placeholder: "e.g. Broasted Chicken — 4 Pcs" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_field :description, placeholder: "Short description of the item" %>
+  </div>
+
+  <div class="form-group form-group-checkbox">
+    <%= form.check_box :base_availability %>
+    <%= form.label :base_availability, "Available by default" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit menu_item.new_record? ? "Create Item" : "Save Changes" %>
+  </div>
+<% end %>
