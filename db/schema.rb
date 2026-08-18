@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_17_000003) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_17_000004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +36,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_17_000003) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "carts", force: :cascade do |t|
+    t.bigint "branch_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_carts_on_branch_id"
+  end
+
   create_table "menu_items", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -46,4 +53,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_17_000003) do
 
   add_foreign_key "branch_menu_items", "branches"
   add_foreign_key "branch_menu_items", "menu_items"
+  add_foreign_key "carts", "branches"
 end
