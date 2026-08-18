@@ -8,22 +8,42 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="turbo-prefetch" content="false">
 
     <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <header class="site-header">
+      <div class="container header-inner">
+        <%= link_to root_path, class: "brand" do %>
+          <span class="brand-logo">🍔</span>
+          <span class="brand-name">Food Ordering</span>
+        <% end %>
+        <nav class="main-nav">
+          <%= link_to "Branches", branches_path, class: "nav-link #{current_page?(branches_path) ? 'active' : ''}" %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main-content">
+      <% if notice %>
+        <div class="flash flash-notice"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="flash flash-alert"><%= alert %></div>
+      <% end %>
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+    </footer>
   </body>
 </html>

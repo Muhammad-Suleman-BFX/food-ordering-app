@@ -1,0 +1,29 @@
+<%= form_with model: branch do |form| %>
+  <% if form.object.errors.any? %>
+    <div class="error"><%= form.object.errors.full_messages.first %></div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, placeholder: "e.g. Albaik — Jeddah Al Andalus" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :address %>
+    <%= form.text_field :address, placeholder: "Full street address" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude, placeholder: "e.g. 21.543333" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude, placeholder: "e.g. 39.172778" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit branch.new_record? ? "Create Branch" : "Save Changes" %>
+  </div>
+<% end %>
