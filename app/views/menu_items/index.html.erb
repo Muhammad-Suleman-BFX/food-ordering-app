@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>Menu Items</h1>
+  <%= link_to "+ New Item", new_menu_item_path, class: "btn btn-primary" %>
+</div>
+
+<% if @menu_items.any? %>
+  <ul class="branch-list">
+    <% @menu_items.each do |item| %>
+      <li>
+        <%= link_to menu_item_path(item) do %>
+          <%= item.name %>
+          <% unless item.base_availability %>
+            <span class="badge"> - Unavailable</span>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty-state">
+    <p>No menu items yet.</p>
+    <%= link_to "Add your first item", new_menu_item_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

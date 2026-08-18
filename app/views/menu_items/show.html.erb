@@ -1,0 +1,26 @@
+<div class="card">
+  <h1><%= @menu_item.name %></h1>
+
+  <div class="detail-grid">
+    <div class="detail-item detail-item-full">
+      <label>Description</label>
+      <span><%= @menu_item.description.presence || "—" %></span>
+    </div>
+    <div class="detail-item">
+      <label>Base Availability</label>
+      <span class="badge <%= @menu_item.base_availability ? 'badge-available' : 'badge-unavailable' %>">
+        <%= @menu_item.base_availability ? "Available" : "Unavailable" %>
+      </span>
+    </div>
+    <div class="detail-item">
+      <label>Branches Offering This</label>
+      <span><%= @menu_item.branch_menu_items.count %></span>
+    </div>
+  </div>
+</div>
+
+<div class="detail-actions">
+  <%= link_to "← Back", menu_items_path, class: "btn btn-secondary" %>
+  <%= link_to "Edit", edit_menu_item_path(@menu_item), class: "btn btn-primary" %>
+  <%= button_to "Delete", @menu_item, method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Delete this menu item?" } %>
+</div>
