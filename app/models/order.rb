@@ -19,4 +19,22 @@ class Order < ApplicationRecord
   validates :total_price, presence: true, numericality: { greater_than: 0 }
   validate :must_have_at_least_one_item, on: :create
   validate :cannot_modify_if_cancelled, on: :update
+
+  scope :active, -> { where.not(status: [ :completed, :cancelled ]) }
+  scope :by_order_type, ->(order_type) { where(order_type: order_type) }
+  scope :by_status, ->(status) { where(status: status) }
+
+  private
+
+  def must_have_at_least_one_item
+    if order_items.empty?
+      errors.add(:base, "Order must contain at least one item")
+    end
+  end
+
+  def cannot_modify_if_cancelled
+    if cancelled? && status_changed?
+      errors.add(:status, "cannot be modified because the order is cancelled")
+    end
+  end
 end
