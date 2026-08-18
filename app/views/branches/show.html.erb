@@ -1,0 +1,20 @@
+<div class="card">
+  <h1><%= @branch.name %></h1>
+
+  <div class="detail-grid">
+    <div class="detail-item">
+      <label>Address</label>
+      <span><%= @branch.address %></span>
+    </div>
+    <div class="detail-item">
+      <label>Coordinates</label>
+      <span><%= @branch.latitude %>, <%= @branch.longitude %></span>
+    </div>
+  </div>
+</div>
+
+<div class="detail-actions">
+  <%= link_to "← Back", branches_path, class: "btn btn-secondary" %>
+  <%= link_to "Edit", edit_branch_path(@branch), class: "btn btn-primary" %>
+  <%= button_to "Delete", @branch, method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Delete this branch?" } %>
+</div>
