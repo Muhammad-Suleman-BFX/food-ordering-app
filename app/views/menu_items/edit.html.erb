@@ -1,0 +1,7 @@
+<h1>Edit Menu Item</h1>
+
+<div class="card">
+  <%= render "form", menu_item: @menu_item %>
+</div>
+
+<%= link_to "← Cancel", menu_item_path(@menu_item), class: "cancel-link" %>
