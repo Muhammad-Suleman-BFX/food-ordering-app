@@ -156,33 +156,33 @@ puts "Creating carts..."
 # Cart 1: Jeddah Al Andalus
 cart1 = Cart.create!(branch: branches[0])
 cart1_bmi1 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[0])
-CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi1, branch_menu_item_quantity: 1)
+CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi1, quantity: 1)
 cart1_bmi2 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[5])
-CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi2, branch_menu_item_quantity: 2)
+CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi2, quantity: 2)
 cart1_bmi3 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[7])
-CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi3, branch_menu_item_quantity: 1)
+CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi3, quantity: 1)
 cart1_bmi4 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[9])
-CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi4, branch_menu_item_quantity: 2)
+CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi4, quantity: 2)
 
 # Cart 2: Makkah
 cart2 = Cart.create!(branch: branches[2])
 cart2_bmi1 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[1])
-CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi1, branch_menu_item_quantity: 1)
+CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi1, quantity: 1)
 cart2_bmi2 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[5])
-CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi2, branch_menu_item_quantity: 3)
+CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi2, quantity: 3)
 cart2_bmi3 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[7])
-CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi3, branch_menu_item_quantity: 2)
+CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi3, quantity: 2)
 
 # Cart 3: Riyadh
 cart3 = Cart.create!(branch: branches[4])
 cart3_bmi1 = BranchMenuItem.find_by(branch: branches[4], menu_item: menu_items[0])
-CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi1, branch_menu_item_quantity: 2)
+CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi1, quantity: 2)
 cart3_bmi2 = BranchMenuItem.find_by(branch: branches[4], menu_item: menu_items[3])
-CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi2, branch_menu_item_quantity: 1)
+CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi2, quantity: 1)
 cart3_bmi3 = BranchMenuItem.find_by(branch: branches[4], menu_item: menu_items[4])
-CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi3, branch_menu_item_quantity: 1)
+CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi3, quantity: 1)
 cart3_bmi4 = BranchMenuItem.find_by(branch: branches[4], menu_item: menu_items[7])
-CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi4, branch_menu_item_quantity: 2)
+CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi4, quantity: 2)
 
 [ cart1, cart2, cart3 ].each_with_index do |cart, i|
   puts "Cart #{i + 1}: #{cart.cart_items.count} items, total SAR #{cart.total_price.round(2)}"
