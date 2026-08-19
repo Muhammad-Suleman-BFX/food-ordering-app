@@ -1,7 +1,11 @@
-<h1>Edit Branch Menu Item</h1>
-
-<div class="card">
-  <%= render "form", branch_menu_item: @branch_menu_item %>
+<div class="detail-actions">
+  <%= link_to "← Cancel", branch_menu_path, class: "btn btn-secondary" %>
 </div>
 
-<%= link_to "← Cancel", branch_menu_item_path(@branch_menu_item), class: "cancel-link" %>
+<div class="detail-header">
+  <h1>Edit Menu Item for: <%= @branch.name %></h1>
+</div>
+
+<div class="card">
+  <%= render "form", available_menu_items: @available_menu_items %>
+</div>

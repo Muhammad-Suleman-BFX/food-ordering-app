@@ -1,5 +1,8 @@
 <div class="card">
-  <h1><%= @branch.name %></h1>
+  <div class="detail-header">
+    <h1><%= @branch.name %></h1>
+    <%= link_to "Branch Menu", branch_menu_path(@branch), class: "btn btn-primary" %>
+  </div>
 
   <div class="detail-grid">
     <div class="detail-item">
