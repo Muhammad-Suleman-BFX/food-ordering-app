@@ -7,4 +7,5 @@ Rails.application.routes.draw do
       only: [ :new, :create, :edit, :update, :destroy ] # /branch_menu_items
   end
   resources :menu_items
+  resources :branch_menu_items
 end
