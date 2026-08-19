@@ -1,16 +1,17 @@
-<%= form_with model: branch_menu_item do |form| %>
+<% if @branch_menu_item.new_record? %>
+  <% form_url = branch_branch_menu_items_path(@branch) %>
+<% else %>
+  <% form_url = branch_branch_menu_item_path(@branch_menu_item.branch, @branch_menu_item) %>
+<% end %>
+
+<%= form_with model: @branch_menu_item, url: form_url do |form| %>
   <% if form.object.errors.any? %>
     <div class="error"><%= form.object.errors.full_messages.first %></div>
   <% end %>
 
   <div class="form-group">
-    <%= form.label :branch_id, "Branch" %>
-    <%= form.collection_select :branch_id, Branch.order(:name), :id, :name, { prompt: "Select a branch" } %>
-  </div>
-
-  <div class="form-group">
     <%= form.label :menu_item_id, "Menu Item" %>
-    <%= form.collection_select :menu_item_id, MenuItem.order(:name), :id, :name, { prompt: "Select a menu item" } %>
+    <%= form.collection_select :menu_item_id, @available_menu_items, :id, :name, { prompt: "Select a menu item" } %>
   </div>
 
   <div class="form-group">
@@ -24,6 +25,6 @@
   </div>
 
   <div class="form-actions">
-    <%= form.submit branch_menu_item.new_record? ? "Create Link" : "Save Changes" %>
+    <%= form.submit @branch_menu_item.new_record? ? "Add Item" : "Save Changes" %>
   </div>
 <% end %>
