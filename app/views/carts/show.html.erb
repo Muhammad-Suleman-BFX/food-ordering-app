@@ -1,0 +1,43 @@
+<div class="card">
+  <h1>Cart #<%= @cart.id %></h1>
+
+  <div class="detail-grid">
+    <div class="detail-item">
+      <label>Branch</label>
+      <span><%= @cart.branch.name %></span>
+    </div>
+    <div class="detail-item">
+      <label>Total Items</label>
+      <span><%= @cart.cart_items.sum(:branch_menu_item_quantity) %></span>
+    </div>
+  </div>
+</div>
+
+<% if @cart_items.any? %>
+  <h2 style="margin-top: 28px; margin-bottom: 16px;">Items</h2>
+  <ul class="branch-list">
+    <% @cart_items.each do |item| %>
+      <li>
+        <div style="padding: 16px 20px;">
+          <span class="list-primary"><%= item.branch_menu_item.menu_item.name %></span>
+          <span class="list-secondary">
+            Qty: <%= item.branch_menu_item_quantity %> × SAR <%= number_with_precision(item.branch_menu_item.menu_item_price, precision: 2) %>
+          </span>
+          <span class="list-meta">
+            Subtotal: SAR <%= number_with_precision(item.branch_menu_item_quantity * item.branch_menu_item.menu_item_price, precision: 2) %>
+          </span>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty-state">
+    <p>This cart is empty.</p>
+  </div>
+<% end %>
+
+<div class="detail-actions" style="margin-top: 24px;">
+  <%= link_to "← Back", carts_path, class: "btn btn-secondary" %>
+  <%= link_to "Edit", edit_cart_path(@cart), class: "btn btn-primary" %>
+  <%= button_to "Delete", @cart, method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Delete this cart?" } %>
+</div>
