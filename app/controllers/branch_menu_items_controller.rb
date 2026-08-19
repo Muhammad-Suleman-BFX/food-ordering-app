@@ -1,10 +1,10 @@
 class BranchMenuItemsController < ApplicationController
+  before_action :get_branch_menu_item, only: %i[ destroy edit update ]
   before_action :get_branch, only: %i[ new create edit update destroy ]
   before_action :get_available_menu_items, only: %i[ new create edit update ]
-  before_action :get_branch_menu_items, only: %i[show edit update destroy]
+  before_action :get_branch_menu_items, only: %i[index show edit update destroy]
 
   def index
-    @branch_menu_items = BranchMenuItem.includes(:branch, :menu_item).order("branch_menu_items.created_at DESC")
     respond_to do |format|
       format.html # Renders app/views/branch_menu_items/index.html.erb
       format.json { render json: @branch_menu_items } # Renders JSON data
@@ -48,6 +48,9 @@ class BranchMenuItemsController < ApplicationController
   end
 
   private
+  def get_branch
+    @branch = Branch.find(params[:branch_id])
+  end
 
   def get_branch
     @branch = Branch.find(params[:branch_id])
