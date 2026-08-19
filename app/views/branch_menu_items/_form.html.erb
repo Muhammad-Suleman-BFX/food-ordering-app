@@ -1,0 +1,29 @@
+<%= form_with model: branch_menu_item do |form| %>
+  <% if form.object.errors.any? %>
+    <div class="error"><%= form.object.errors.full_messages.first %></div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :branch_id, "Branch" %>
+    <%= form.collection_select :branch_id, Branch.order(:name), :id, :name, { prompt: "Select a branch" } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :menu_item_id, "Menu Item" %>
+    <%= form.collection_select :menu_item_id, MenuItem.order(:name), :id, :name, { prompt: "Select a menu item" } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :menu_item_price, "Price (SAR)" %>
+    <%= form.number_field :menu_item_price, step: 0.01, placeholder: "e.g. 19.00" %>
+  </div>
+
+  <div class="form-group form-group-checkbox">
+    <%= form.check_box :menu_item_availability %>
+    <%= form.label :menu_item_availability, "Available at this branch" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit branch_menu_item.new_record? ? "Create Link" : "Save Changes" %>
+  </div>
+<% end %>
