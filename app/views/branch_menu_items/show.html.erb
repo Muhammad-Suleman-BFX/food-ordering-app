@@ -1,0 +1,32 @@
+<div class="card">
+  <h1><%= @branch_menu_item.menu_item.name %></h1>
+
+  <div class="detail-grid">
+    <div class="detail-item">
+      <label>Branch</label>
+      <span><%= @branch_menu_item.branch.name %></span>
+    </div>
+    <div class="detail-item">
+      <label>Price</label>
+      <span>SAR <%= number_with_precision(@branch_menu_item.menu_item_price, precision: 2) %></span>
+    </div>
+    <div class="detail-item">
+      <label>Availability</label>
+      <span class="badge <%= @branch_menu_item.menu_item_availability ? 'badge-available' : 'badge-unavailable' %>">
+        <%= @branch_menu_item.menu_item_availability ? "Available" : "Unavailable" %>
+      </span>
+    </div>
+    <div class="detail-item">
+      <label>Base Availability</label>
+      <span class="badge <%= @branch_menu_item.menu_item.base_availability ? 'badge-available' : 'badge-unavailable' %>">
+        <%= @branch_menu_item.menu_item.base_availability ? "Available" : "Unavailable" %>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="detail-actions">
+  <%= link_to "← Back", branch_menu_items_path, class: "btn btn-secondary" %>
+  <%= link_to "Edit", edit_branch_menu_item_path(@branch_menu_item), class: "btn btn-primary" %>
+  <%= button_to "Delete", @branch_menu_item, method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Delete this branch menu item?" } %>
+</div>
