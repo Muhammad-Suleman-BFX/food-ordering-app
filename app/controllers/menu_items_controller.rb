@@ -2,7 +2,7 @@ class MenuItemsController < ApplicationController
   before_action :set_menu_item, only: %i[show edit update destroy]
 
   def index
-    @menu_items = MenuItem.all.order(:created_at)
+    @menu_items = MenuItem.all.order("created_at DESC")
     respond_to do |format|
       format.html # Renders app/views/menu_items/index.html.erb
       format.json { render json: @menu_items } # Renders JSON data

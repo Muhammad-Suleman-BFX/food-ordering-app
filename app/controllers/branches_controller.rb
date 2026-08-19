@@ -1,7 +1,7 @@
 class BranchesController < ApplicationController
   before_action :get_branch, only: %i[ show edit update destroy]
   def index
-    @branches = Branch.all
+    @branches = Branch.all.order("created_at DESC")
     respond_to do |format|
       format.html # Renders app/views/branches/index.html.erb
       format.json { render json: @branches } # Renders JSON data
@@ -38,6 +38,11 @@ class BranchesController < ApplicationController
   def destroy
     @branch.destroy
     redirect_to branches_path
+  end
+
+  def menu
+    @branch = Branch.find(params[:branch_id])
+    @branch_menu_items = @branch.branch_menu_items.includes(:menu_item).order("branch_menu_items.created_at DESC")
   end
 
   private
