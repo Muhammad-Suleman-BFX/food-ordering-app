@@ -1,0 +1,14 @@
+<%= form_with model: cart do |form| %>
+  <% if form.object.errors.any? %>
+    <div class="error"><%= form.object.errors.full_messages.first %></div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :branch_id, "Branch" %>
+    <%= form.collection_select :branch_id, Branch.order(:name), :id, :name, { prompt: "Select a branch" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit cart.new_record? ? "Create Cart" : "Save Changes" %>
+  </div>
+<% end %>
