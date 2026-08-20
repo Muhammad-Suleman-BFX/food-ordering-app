@@ -9,6 +9,20 @@ class CartsController < ApplicationController
     @cart_items = @cart.cart_items.includes(branch_menu_item: :menu_item)
   end
 
+  # Show the current active cart from session
+  def current
+    @cart = Cart.find_by(id: session[:cart_id])
+
+    if @cart.nil?
+      redirect_to order_start_path, alert: "No active cart. Start an order to begin."
+      return
+    end
+
+    @cart_items = @cart.cart_items.includes(branch_menu_item: :menu_item)
+    # @cart_items = @cart.cart_items.includes(branch_menu_item: :menu_item).where(branch_menu_item: { menu_item_availability: true })
+    render :show
+  end
+
   def new
     @cart = Cart.new
   end

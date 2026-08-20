@@ -1,10 +1,11 @@
 class BranchesController < ApplicationController
-  before_action :get_branch, only: %i[ show edit update destroy]
+  before_action :get_branch, only: %i[show edit update destroy menu]
+
   def index
     @branches = Branch.all.order("created_at DESC")
     respond_to do |format|
-      format.html # Renders app/views/branches/index.html.erb
-      format.json { render json: @branches } # Renders JSON data
+      format.html
+      format.json { render json: @branches }
     end
   end
 
@@ -41,16 +42,21 @@ class BranchesController < ApplicationController
   end
 
   def menu
-    @branch = Branch.find(params[:branch_id])
-    @branch_menu_items = @branch.branch_menu_items.includes(:menu_item).order("branch_menu_items.created_at DESC")
+    @branch_menu_items = @branch.branch_menu_items
+                                 .includes(:menu_item)
+                                 .where(menu_items: { base_availability: true })
+                                 .order("branch_menu_items.created_at DESC")
+
+    @cart = Cart.find_by(id: session[:cart_id])
   end
 
   private
-    def get_branch
-      @branch = Branch.find(params[:id])
-    end
 
-    def branch_params
-      params.require(:branch).permit(:name, :address, :latitude, :longitude)
-    end
+  def get_branch
+    @branch = Branch.find(params[:id])
+  end
+
+  def branch_params
+    params.require(:branch).permit(:name, :address, :latitude, :longitude)
+  end
 end

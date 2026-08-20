@@ -1,6 +1,8 @@
 <div class="page-header">
   <h1>Branches</h1>
-  <%= link_to "+ New Branch", new_branch_path, class: "btn btn-primary" %>
+  <div style="display: flex; gap: 10px;">
+    <%= link_to "+ New Branch", new_branch_path, class: "btn btn-secondary" %>
+  </div>
 </div>
 
 <% if @branches.any? %>

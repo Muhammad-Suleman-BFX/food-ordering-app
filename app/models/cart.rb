@@ -6,6 +6,16 @@ class Cart < ApplicationRecord
   validates :branch_id, presence: true
   validate :all_items_must_belong_to_same_branch
 
+  def total_price
+    cart_items.includes(:branch_menu_item).sum do |item|
+      item.branch_menu_item.menu_item_price * item.branch_menu_item_quantity
+    end
+  end
+
+  def total_items_count
+    cart_items.sum(:branch_menu_item_quantity)
+  end
+
   private
 
   def all_items_must_belong_to_same_branch

@@ -1,0 +1,45 @@
+<div class="card" style="text-align: center; padding: 48px 28px;">
+  <h1 style="margin-bottom: 8px;">Start Your Order</h1>
+  <p style="color: #6b7280; margin-bottom: 32px;">Choose how you want to receive your order and pick a branch.</p>
+
+  <%= form_with url: order_set_branch_path, method: :post, local: true do |form| %>
+    <div class="form-group" style="text-align: left;">
+      <%= form.label :order_type, "Order Type" %>
+      <div style="display: flex; gap: 12px; margin-top: 8px;">
+        <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e5e7eb; border-radius: 10px; cursor: pointer; flex: 1; background: #ffffff;">
+          <%= form.radio_button :order_type, "pickup", checked: true %>
+          <span style="font-weight: 500;">🛍️ Pickup</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e5e7eb; border-radius: 10px; cursor: pointer; flex: 1; background: #ffffff;">
+          <%= form.radio_button :order_type, "delivery" %>
+          <span style="font-weight: 500;">🚚 Delivery</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+      <%= form.label :branch_id, "Select Branch" %>
+      <%= form.collection_select :branch_id, @branches, :id, :name, { prompt: "Choose a branch..." } %>
+    </div>
+    <div class="form-group" style="margin: 0">
+      <%= form.label :gps_location, "OR" %>
+    </div>
+    <span>
+      Enter GPS location
+    </span>
+    <div class="form-group" style="text-align: left;">
+      <%= form.label :latitude %>
+      <%= form.text_field :latitude, placeholder: "e.g. 21.543333" %>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+      <%= form.label :longitude %>
+      <%= form.text_field :longitude, placeholder: "e.g. 39.172778" %>
+    </div>
+
+
+    <div style="margin-top: 28px;">
+      <%= form.submit "Browse Menu →", class: "btn btn-primary", style: "padding: 12px 32px; font-size: 15px;" %>
+    </div>
+  <% end %>
+</div>

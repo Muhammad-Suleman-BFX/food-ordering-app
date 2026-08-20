@@ -1,7 +1,7 @@
 <% if @branch_menu_item.new_record? %>
   <% form_url = branch_branch_menu_items_path(@branch) %>
 <% else %>
-  <% form_url = branch_branch_menu_item_path(@branch_menu_item.branch, @branch_menu_item) %>
+  <% form_url = branch_branch_menu_item_path(@branch, @branch_menu_item) %>
 <% end %>
 
 <%= form_with model: @branch_menu_item, url: form_url do |form| %>
@@ -16,7 +16,7 @@
 
   <div class="form-group">
     <%= form.label :menu_item_price, "Price (SAR)" %>
-    <%= form.number_field :menu_item_price, step: 0.01, placeholder: "e.g. 19.00" %>
+    <%= form.number_field :menu_item_price, step: 1, placeholder: "e.g. 19.00" %>
   </div>
 
   <div class="form-group form-group-checkbox">

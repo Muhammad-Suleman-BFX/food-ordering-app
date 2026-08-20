@@ -1,35 +1,57 @@
-<div class="detail-actions page-header">
-  <%= link_to "← Back", branch_path(@branch), class: "btn btn-secondary" %>
-  <% if @branch_menu_items.any? %>
+<% coming_from_branches_path = request&.referer&.include?("branches") %>
+
+<div class="page-header" style="<%= coming_from_branches_path ? "" : "justify-content: end"%>">
+  <% if coming_from_branches_path %>
+    <%= link_to "← Back", branch_path, class: "btn btn-secondary" %>
+  <% end %>
+  <% if !coming_from_branches_path && @cart %>
+    <%= link_to "🛒 Cart (#{@cart.cart_items.sum(:branch_menu_item_quantity) rescue 0})", current_cart_path, class: "btn btn-primary" %>
+  <% else %>
     <%= link_to "+ Add Item into Branch", new_branch_branch_menu_item_path(@branch), class: "btn btn-primary" %>
   <% end %>
 </div>
 
-<% if @branch_menu_items.any? %>
-  <div class="detail-header">
-    <h1>Branch Menu Items</h1>
-  </div>
-<% end %>
+<h1 style="margin-bottom: 8px;"><%= @branch.name %></h1>
+<p style="color: #6b7280; margin-bottom: 24px;"><%= @branch.address %></p>
 
 <% if @branch_menu_items.any? %>
   <ul class="menu-list">
     <% @branch_menu_items.each do |bmi| %>
-      <div class="detail-grid">
-        <div class="detail-item">
-          <span>Item: <%= bmi.menu_item.name %></span>
-          <label>Price: SAR <%= number_with_precision(bmi.menu_item_price, precision: 2) %></label>
-          <label>Available: <%= bmi.menu_item_availability ? "Yes" : "No" %></label>
-          <div class="menu-item-actions">
-            <%= link_to "Edit", edit_branch_branch_menu_item_path(@branch, bmi), class: "btn btn-primary" %>
-            <%= button_to "Delete", branch_branch_menu_item_path(@branch, bmi), method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Delete this item from branch?" } %>
+      <li>
+        <div style="padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+          <div style="flex: 1; min-width: 0;" class="<%= class_names("disable" => !bmi.is_available_at_branch?) %>">
+            <span class="list-primary"><%= bmi.menu_item.name %></span>
+            <% if bmi.menu_item.description.present? %>
+              <span class="list-secondary" style="display: block; margin-top: 2px;"><%= bmi.menu_item.description %></span>
+            <% end %>
+            <span class="list-meta" style="margin-top: 4px;">SAR <%= number_with_precision(bmi.menu_item_price, precision: 2) %></span>
           </div>
+          <% if coming_from_branches_path %>
+            <%= link_to edit_branch_branch_menu_item_path(@branch, bmi),
+                class: "btn btn-secondary",
+                style: "white-space: nowrap; flex-shrink: 0;" do %>
+              Edit
+            <% end %>
+            <%= button_to branch_branch_menu_item_path(@branch, bmi),
+                method: :delete,
+                class: "btn btn-danger",
+                style: "white-space: nowrap; flex-shrink: 0;" do %>
+              Delete
+            <% end %>
+          <% elsif bmi.is_available_at_branch? %>
+            <%= button_to cart_items_path(branch_menu_item_id: bmi.id),
+                method: :post,
+                class: "btn btn-primary",
+                style: "white-space: nowrap; flex-shrink: 0;" do %>
+              Add to cart
+            <% end %>
+          <% end %>
         </div>
-      </div>
+      </li>
     <% end %>
   </ul>
 <% else %>
   <div class="empty-state">
-    <p>No branch menu items yet.</p>
-    <%= link_to "Add your first item", new_branch_branch_menu_item_path(@branch), class: "btn btn-primary" %>
+    <p>No items available at this branch right now.</p>
   </div>
 <% end %>
