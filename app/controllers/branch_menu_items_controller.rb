@@ -1,5 +1,4 @@
 class BranchMenuItemsController < ApplicationController
-  before_action :get_branch_menu_item, only: %i[ destroy edit update ]
   before_action :get_branch, only: %i[ new create edit update destroy ]
   before_action :get_available_menu_items, only: %i[ new create edit update ]
   before_action :get_branch_menu_items, only: %i[ index show edit update destroy ]
