@@ -1,7 +1,7 @@
 class BranchMenuItemsController < ApplicationController
   before_action :get_branch, only: %i[ new create edit update destroy ]
   before_action :get_available_menu_items, only: %i[ new create edit update ]
-  before_action :get_branch_menu_item, only: %i[ index show edit update destroy ]
+  before_action :get_branch_menu_item, only: %i[ show edit update destroy ]
 
   def index
     @branch_menu_items = BranchMenuItem.includes(:branch, :menu_item).order("branch_menu_items.created_at DESC")
