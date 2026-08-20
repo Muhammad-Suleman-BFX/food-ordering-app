@@ -1,6 +1,8 @@
 class BranchMenuItem < ApplicationRecord
   belongs_to :branch
   belongs_to :menu_item
+  has_many :cart_items, dependent: :restrict_with_error
+
 
   validates :menu_item_price, presence: true, numericality: { greater_than: 0 }
   validates :menu_item_availability, inclusion: { in: [ true, false ] }
@@ -10,6 +12,14 @@ class BranchMenuItem < ApplicationRecord
   scope :available, -> { where(menu_item_availability: true).joins(:menu_item).where(menu_items: { base_availability: true }) }
   scope :by_branch, ->(branch_id) { where(branch_id: branch_id) }
   scope :ordered_by_price, -> { order(menu_item_price: :asc) }
+
+  def is_available_at_branch?
+    menu_item_availability?
+  end
+
+  def effective_available?
+    menu_item_availability? && menu_item&.base_availability?
+  end
 
   private
 

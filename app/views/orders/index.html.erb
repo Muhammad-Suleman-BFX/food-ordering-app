@@ -1,0 +1,26 @@
+<div class="page-header">
+  <h1>Orders</h1>
+</div>
+
+<% if @orders.any? %>
+  <ul class="branch-list">
+    <% @orders.each do |order| %>
+      <li>
+        <%= link_to order_path(order) do %>
+          <span class="list-primary">Order #<%= order.id %> • <%= order.branch.name %></span>
+          <span class="list-secondary">
+            <%= order.order_type.humanize %> • <%= order.status.humanize %>
+          </span>
+          <span class="list-meta">
+            <%= order.order_items.sum(:menu_item_quantity) %> items • SAR <%= number_with_precision(order.total_price, precision: 2) %>
+          </span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty-state">
+    <p>No orders yet.</p>
+    <%= link_to "Place your first order", order_start_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

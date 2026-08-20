@@ -1,0 +1,48 @@
+<div class="detail-actions" style="margin-bottom: 20px; justify-content: space-between">
+  <%= link_to "← All Orders", orders_path, class: "btn btn-secondary" %>
+  <%= link_to "Order Again", order_start_path, class: "btn btn-primary" %>
+</div>
+
+<div class="card">
+  <div style="text-align: center; margin-bottom: 8px;">
+    <span style="font-size: 48px;">🎉</span>
+  </div>
+  <h1 style="text-align: center; margin-bottom: 8px;">Order Confirmed</h1>
+  <p style="text-align: center; color: #6b7280; margin-bottom: 28px;">Order #<%= @order.id %> • <%= @order.branch.name %></p>
+
+  <div class="detail-grid">
+    <div class="detail-item">
+      <label>Type</label>
+      <span><%= @order.order_type.humanize %></span>
+    </div>
+    <div class="detail-item">
+      <label>Status</label>
+      <span class="badge badge-available"><%= @order.status.humanize %></span>
+    </div>
+    <div class="detail-item">
+      <label>Items</label>
+      <span><%= @order.order_items.sum(:menu_item_quantity) %></span>
+    </div>
+    <div class="detail-item">
+      <label>Total</label>
+      <span style="font-weight: 700;">SAR <%= number_with_precision(@order.total_price, precision: 2) %></span>
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top: 28px; margin-bottom: 16px;">Ordered Items</h2>
+<ul class="branch-list">
+  <% @order.order_items.each do |item| %>
+    <li>
+      <div style="padding: 16px 20px;">
+        <span class="list-primary"><%= item.menu_item_name %></span>
+        <span class="list-secondary">
+          - <%= item.menu_item_quantity %> × <%= number_with_precision(item.menu_item_price, precision: 2) %> SAR
+        </span>
+        <span class="list-meta">
+          - Total: <%= number_with_precision(item.menu_item_price * item.menu_item_quantity, precision: 2) %> SAR
+        </span>
+      </div>
+    </li>
+  <% end %>
+</ul>

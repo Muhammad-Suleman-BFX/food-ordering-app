@@ -1,7 +1,7 @@
 <div class="card">
   <div class="detail-header">
     <h1><%= @branch.name %></h1>
-    <%= link_to "Branch Menu", branch_menu_path(@branch), class: "btn btn-primary" %>
+    <%= link_to "Branch Menu", menu_branch_path, class: "btn btn-primary" %>
   </div>
 
   <div class="detail-grid">
@@ -18,6 +18,6 @@
 
 <div class="detail-actions">
   <%= link_to "← Back", branches_path, class: "btn btn-secondary" %>
-  <%= link_to "Edit", edit_branch_path(@branch), class: "btn btn-primary" %>
+  <%= link_to "Edit", edit_branch_path, class: "btn btn-primary" %>
   <%= button_to "Delete", @branch, method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Delete this branch?" } %>
 </div>
