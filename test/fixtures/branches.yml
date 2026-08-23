@@ -1,0 +1,11 @@
+jeddah:
+  name: "Albaik — Jeddah Al Andalus"
+  address: "Al Andalus District, Jeddah 23326, KSA"
+  latitude: 21.543333
+  longitude: 39.172778
+
+makkah:
+  name: "Albaik — Makkah Al Aziziyah"
+  address: "Al Aziziyah District, Makkah 24243, KSA"
+  latitude: 21.422500
+  longitude: 39.826111

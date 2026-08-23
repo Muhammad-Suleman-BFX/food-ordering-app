@@ -1,0 +1,9 @@
+chicken_4pc:
+  name: "Broasted Chicken — 4 Pcs"
+  description: "Crispy golden broasted chicken"
+  base_availability: true
+
+chicken_8pc:
+  name: "Broasted Chicken — 8 Pcs"
+  description: "Family size crispy broasted chicken"
+  base_availability: true

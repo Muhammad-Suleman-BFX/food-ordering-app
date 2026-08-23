@@ -1,0 +1,17 @@
+jeddah_chicken_4pc:
+  branch: jeddah
+  menu_item: chicken_4pc
+  menu_item_price: 19.00
+  menu_item_availability: true
+
+jeddah_chicken_8pc:
+  branch: jeddah
+  menu_item: chicken_8pc
+  menu_item_price: 35.00
+  menu_item_availability: true
+
+makkah_chicken_8pc:
+  branch: makkah
+  menu_item: chicken_8pc
+  menu_item_price: 35.00
+  menu_item_availability: true
