@@ -37,20 +37,13 @@
     </header>
 
     <main class="container main-content">
-      
       <div id="flash-container">
         <% flash.each do |type, message| %>
-          <div class="alert alert-<%= type %>">
+          <div class="flash flash-<%= type %>">
             <%= message %>
           </div>
         <% end %>
       </div>
-      <% if notice %>
-        <div class="flash flash-notice"><%= notice %></div>
-      <% end %>
-      <% if alert %>
-        <div class="flash flash-alert"><%= alert %></div>
-      <% end %>
       <%= yield %>
     </main>
 
