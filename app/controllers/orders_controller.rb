@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :get_branch, only: %i[start set_branch]
+  before_action :get_branches, only: %i[start set_branch]
   before_action :set_order, only: %i[show edit update destroy]
 
   def index
@@ -34,13 +34,13 @@ class OrdersController < ApplicationController
       return
     end
 
-    # If GPS provided but no branch, find nearest branch (basic implementation)
+    # If GPS provided but no branch, find nearest branch
     if branch_id.blank? && latitude.present? && longitude.present?
       lat = latitude.to_f
       lng = longitude.to_f
-      nearest_branch = Branch.all.min_by do |b|
-        ((b.latitude.to_f - lat)**2 + (b.longitude.to_f - lng)**2)
-      end
+      # Quick, flat-earth calculation.
+      # Else we can use Geocoder Gem as it calculates distances taking into Earth's curvature
+      nearest_branch = Branch.order(Arel.sql("ABS(latitude - #{lat}) + ABS(longitude - #{lng})")).first
       branch_id = nearest_branch.id
     end
 
@@ -136,7 +136,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
-  def get_branch
+  def get_branches
     @branches = Branch.order(:name)
   end
 
