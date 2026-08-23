@@ -33,7 +33,7 @@ class Order < ApplicationRecord
   end
 
   def cannot_modify_if_cancelled
-    if cancelled? && status_changed?
+    if status_was == "cancelled" && status_changed?
       errors.add(:status, "cannot be modified because the order is cancelled")
     end
   end

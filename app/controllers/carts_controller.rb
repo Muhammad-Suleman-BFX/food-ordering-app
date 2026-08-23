@@ -49,6 +49,7 @@ class CartsController < ApplicationController
 
   def destroy
     @cart.destroy
+    session.delete(:cart_id)
     redirect_to order_start_path, notice: "Cart deleted.", status: :see_other
   end
 

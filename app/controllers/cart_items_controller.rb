@@ -26,8 +26,11 @@ class CartItemsController < ApplicationController
     existing_item = cart.cart_items.find_by(branch_menu_item: branch_menu_item)
 
     if existing_item
-      existing_item.update!(branch_menu_item_quantity: existing_item.branch_menu_item_quantity + 1)
-      redirect_to current_cart_path, notice: "Item quantity updated."
+      if existing_item.update(branch_menu_item_quantity: existing_item.branch_menu_item_quantity + 1)
+        redirect_to current_cart_path, notice: "Item quantity updated."
+      else
+        redirect_to current_cart_path, alert: existing_item.errors.full_messages.first
+      end
     else
       cart_item = cart.cart_items.build(branch_menu_item: branch_menu_item, branch_menu_item_quantity: 1)
 
@@ -40,7 +43,7 @@ class CartItemsController < ApplicationController
   end
 
   def update
-    quantity = params[:cart_item][:branch_menu_item_quantity].to_i
+    quantity = params.dig(:cart_item, :branch_menu_item_quantity).to_i
 
     if quantity <= 0
       @cart_item.destroy
