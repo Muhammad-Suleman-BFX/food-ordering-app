@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :get_branches, only: %i[start set_branch]
+  before_action :get_branches, only: %i[start]
   before_action :set_order, only: %i[show edit update destroy]
 
   def index
@@ -38,20 +38,27 @@ class OrdersController < ApplicationController
     if branch_id.blank? && latitude.present? && longitude.present?
       lat = latitude.to_f
       lng = longitude.to_f
-      # Quick, flat-earth calculation.
+      # Quick, flat-earth calculation
       # Else we can use Geocoder Gem as it calculates distances taking into Earth's curvature
       nearest_branch = Branch.order(Arel.sql("ABS(latitude - #{lat}) + ABS(longitude - #{lng})")).first
+
+      if nearest_branch.nil?
+        flash.now[:alert] = "No branches are available. Please try again later."
+        render :start, status: :unprocessable_entity
+        return
+      end
+
       branch_id = nearest_branch.id
     end
 
     # Clear any existing cart session
     session.delete(:cart_id)
     session.delete(:order_type)
-    session[:order_type] = order_type
 
     # Create a new cart for this branch
     cart = Cart.create!(branch_id: branch_id)
     session[:cart_id] = cart.id
+    session[:order_type] = order_type
 
     redirect_to menu_branch_path(branch_id), notice: "Cart started. Browse the menu and add items."
   end
@@ -67,6 +74,12 @@ class OrdersController < ApplicationController
 
     if cart.cart_items.empty?
       redirect_to current_cart_path, alert: "Your cart is empty. Add items before placing an order."
+      return
+    end
+
+    # Re-check availability at order time (items may have become unavailable)
+    if cart.cart_items.any? { |ci| !ci.branch_menu_item.effective_available? }
+      redirect_to current_cart_path, alert: "Some items in your cart are no longer available. Please review your cart."
       return
     end
 
@@ -89,15 +102,18 @@ class OrdersController < ApplicationController
 
     @order.total_price = @order.order_items.sum { |oi| oi.menu_item_price * oi.menu_item_quantity }
 
-    if @order.save
-      # Clear cart and session
-      cart.destroy
-      session.delete(:cart_id)
-      session.delete(:order_type)
+    # Wrap order creation and cart cleanup in a transaction
+    ActiveRecord::Base.transaction do
+      if @order.save
+        # Clear cart and session
+        cart.destroy
+        session.delete(:cart_id)
+        session.delete(:order_type)
 
-      redirect_to @order, notice: "Order placed successfully!"
-    else
-      redirect_to current_cart_path, alert: "Could not place order: #{@order.errors.full_messages.first}"
+        redirect_to @order, notice: "Order placed successfully!"
+      else
+        redirect_to current_cart_path, alert: "Could not place order: #{@order.errors.full_messages.first}"
+      end
     end
   end
 

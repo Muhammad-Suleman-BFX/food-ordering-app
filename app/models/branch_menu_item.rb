@@ -18,14 +18,14 @@ class BranchMenuItem < ApplicationRecord
   end
 
   def effective_available?
-    menu_item_availability? && menu_item&.base_availability?
+    menu_item&.base_availability? && menu_item_availability?
   end
 
   private
 
   def menu_item_must_be_available_if_branch_item_available
-    if menu_item_availability? && menu_item.present? && !menu_item.base_availability?
-      errors.add(:menu_item_availability, "cannot be true when the menu item is not base available")
+    if !menu_item&.base_availability? && menu_item_availability?
+      errors.add(:menu_item_availability, "cannot be true when the menu item is not available at base level")
     end
   end
 end
