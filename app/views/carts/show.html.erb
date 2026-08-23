@@ -1,9 +1,14 @@
-<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-  <%= link_to "Continue Shopping", menu_branch_path(@cart.branch), class: "btn btn-secondary" %>
-  <%= link_to "Change Branch", order_start_path, class: "btn btn-primary" %>
-</div>
-
 <% if @cart %>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <%= link_to "Change Branch", order_start_path, class: "btn btn-primary" %>
+    <%= button_to "Delete Cart", @cart, method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Delete this cart?" } %>
+  </div>
+  <% if @cart_items.present? %>
+    <div style="margin: 20px 0;">
+      <%= link_to "Continue Shopping", menu_branch_path(@cart.branch), class: "btn btn-secondary", style: "font-size: 16px; width: 100%; justify-content: center;" %>
+    </div>
+  <% end %>
+
   <div class="card">
     <h1>Cart #<%= @cart.id %></h1>
 
@@ -68,7 +73,7 @@
   <% else %>
     <div class="empty-state">
       <p>Your cart is empty.</p>
-      <%= link_to "Browse Menu", menu_branch_path(@cart.branch), class: "btn btn-primary" %>
+      <%= link_to "Continue Shopping", menu_branch_path(@cart.branch), class: "btn btn-primary" %>
     </div>
   <% end %>
 <% else %>

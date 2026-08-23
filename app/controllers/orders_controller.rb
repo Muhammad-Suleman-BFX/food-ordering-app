@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :get_branches, only: %i[start set_branch]
   before_action :set_order, only: %i[show edit update destroy]
 
   def index
@@ -10,28 +11,42 @@ class OrdersController < ApplicationController
 
   # Step 1: Start order - select type and branch
   def start
-    @order = Order.new
-    @branches = Branch.order(:name)
   end
 
   # Step 2: Process start form - create cart and go to menu
   def set_branch
-    latitude = params[:latitude]
-    lonitude = params[:lonitude]
-    branch_id = params[:branch_id]
     order_type = params[:order_type]
+    branch_id  = params[:branch_id]
+    latitude   = params[:latitude]&.strip
+    longitude  = params[:longitude]&.strip
 
-      # if latitude.blank? || lonitude.blank? || branch_id
-      flash.now[:alert] = "Either select branch or enter latitude and longitude"
-    # end
-
-    if order_type.blank? || branch_id.blank?
-      # redirect_to order_start_path, alert: "Please select both order type and branch."
+    # Validate order type
+    if order_type.blank?
+      flash.now[:alert] = "Please select an order type (Pickup or Delivery)."
+      render :start, status: :unprocessable_entity
       return
+    end
+
+    # Validate branch or GPS
+    if branch_id.blank? && (latitude.blank? || longitude.blank?)
+      flash.now[:alert] = "Please select a branch or enter both latitude and longitude."
+      render :start, status: :unprocessable_entity
+      return
+    end
+
+    # If GPS provided but no branch, find nearest branch
+    if branch_id.blank? && latitude.present? && longitude.present?
+      lat = latitude.to_f
+      lng = longitude.to_f
+      # Quick, flat-earth calculation.
+      # Else we can use Geocoder Gem as it calculates distances taking into Earth's curvature
+      nearest_branch = Branch.order(Arel.sql("ABS(latitude - #{lat}) + ABS(longitude - #{lng})")).first
+      branch_id = nearest_branch.id
     end
 
     # Clear any existing cart session
     session.delete(:cart_id)
+    session.delete(:order_type)
     session[:order_type] = order_type
 
     # Create a new cart for this branch
@@ -119,6 +134,10 @@ class OrdersController < ApplicationController
 
   def set_order
     @order = Order.find(params[:id])
+  end
+
+  def get_branches
+    @branches = Branch.order(:name)
   end
 
   def order_params

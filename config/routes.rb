@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "branches#index"
+  root "orders#start"
 
   # Ordering flow
   get   "order/start",        to: "orders#start",        as: :order_start
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :menu_items
-  resources :carts
+  resources :carts, except: [ :index, :show ]
   resources :cart_items, only: [ :create, :update, :destroy ]
-  resources :orders
+  resources :orders, except: [ :edit, :update, :destroy ]
 end

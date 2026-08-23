@@ -24,8 +24,7 @@
     <header class="site-header">
       <div class="container header-inner">
         <%= link_to root_path, class: "brand" do %>
-          <span class="brand-logo">🍔</span>
-          <span class="brand-name">Food Ordering</span>
+          <span class="brand-name">Food Ordering App</span>
         <% end %>
         <nav class="main-nav">
           <%= link_to "Branches", branches_path, class: "nav-link #{current_page?(branches_path) ? 'active' : ''}" %>
@@ -37,20 +36,13 @@
     </header>
 
     <main class="container main-content">
-      
       <div id="flash-container">
         <% flash.each do |type, message| %>
-          <div class="alert alert-<%= type %>">
+          <div class="flash flash-<%= type %>">
             <%= message %>
           </div>
         <% end %>
       </div>
-      <% if notice %>
-        <div class="flash flash-notice"><%= notice %></div>
-      <% end %>
-      <% if alert %>
-        <div class="flash flash-alert"><%= alert %></div>
-      <% end %>
       <%= yield %>
     </main>
 

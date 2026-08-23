@@ -395,3 +395,30 @@ h1 {
   pointer-events: none;
   opacity: 0.6; 
 }
+
+/* Radio cards for order type selection */
+.radio-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+  flex: 1;
+  background: #ffffff;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.radio-card:hover {
+  border-color: #d1d5db;
+}
+.radio-card input[type="radio"] {
+  accent-color: #111827;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.radio-card-selected {
+  border-color: #111827;
+  background-color: #f9fafb;
+}

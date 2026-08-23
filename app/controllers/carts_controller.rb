@@ -1,13 +1,13 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: %i[show edit update destroy]
 
-  def index
-    @carts = Cart.includes(:branch).order(created_at: :desc)
-  end
+  # def index
+  #   @carts = Cart.includes(:branch).order(created_at: :desc)
+  # end
 
-  def show
-    @cart_items = @cart.cart_items.includes(branch_menu_item: :menu_item)
-  end
+  # def show
+  #   @cart_items = @cart.cart_items.includes(branch_menu_item: :menu_item)
+  # end
 
   # Show the current active cart from session
   def current
@@ -49,7 +49,7 @@ class CartsController < ApplicationController
 
   def destroy
     @cart.destroy
-    redirect_to carts_path, notice: "Cart deleted.", status: :see_other
+    redirect_to order_start_path, notice: "Cart deleted.", status: :see_other
   end
 
   private
