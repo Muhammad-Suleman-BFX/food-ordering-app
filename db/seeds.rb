@@ -83,14 +83,14 @@ puts "Creating 10 Albaik menu items..."
 menu_items_data = [
   { name: "Broasted Chicken — 4 Pcs", description: "Crispy golden broasted chicken, 4 pieces with signature garlic sauce", base_availability: true },
   { name: "Broasted Chicken — 8 Pcs", description: "Family size crispy broasted chicken, 8 pieces with garlic sauce", base_availability: true },
-  { name: "Fish Fillet — 2 Pcs", description: "Crispy battered fish fillet with tartar sauce", base_availability: true },
+  { name: "Fish Fillet — 2 Pcs", description: "Crispy battered fish fillet with tartar sauce", base_availability: false },
   { name: "Fish Fillet — 4 Pcs", description: "Double portion crispy fish fillet with tartar sauce", base_availability: true },
   { name: "Jumbo Shrimp — 8 Pcs", description: "Golden fried jumbo shrimp with cocktail sauce", base_availability: true },
-  { name: "Chicken Fillet Sandwich", description: "Crispy chicken fillet in bun with mayo and pickles", base_availability: true },
+  { name: "Chicken Fillet Sandwich", description: "Crispy chicken fillet in bun with mayo and pickles", base_availability: false },
   { name: "Family Meal — Chicken", description: "8 pcs chicken + 4 buns + large coleslaw + large fries + 4 garlic sauces", base_availability: true },
   { name: "Regular Fries", description: "Classic cut golden french fries", base_availability: true },
   { name: "Garlic Sauce Cup", description: "Albaik's signature garlic sauce", base_availability: true },
-  { name: "Pepsi — Large", description: "Large chilled Pepsi", base_availability: true }
+  { name: "Pepsi — Large", description: "Large chilled Pepsi", base_availability: false }
 ]
 
 menu_items = menu_items_data.map { |attrs| MenuItem.create!(attrs) }
@@ -135,12 +135,13 @@ branches.each_with_index do |branch, bi|
   item_indexes.each do |mi|
     item = menu_items[mi]
     price = fixed_prices[item.name]
+    availability = menu_items[mi][:base_availability]
 
     bmi = BranchMenuItem.create!(
       branch: branch,
       menu_item: item,
       menu_item_price: price,
-      menu_item_availability: true
+      menu_item_availability: availability
     )
     branch_menu_items << bmi
   end
@@ -157,18 +158,16 @@ puts "Creating carts..."
 cart1 = Cart.create!(branch: branches[0])
 cart1_bmi1 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[0])
 CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi1, branch_menu_item_quantity: 1)
-cart1_bmi2 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[5])
+cart1_bmi2 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[1])
 CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi2, branch_menu_item_quantity: 2)
 cart1_bmi3 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[7])
 CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi3, branch_menu_item_quantity: 3)
-cart1_bmi4 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[9])
-CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi4, branch_menu_item_quantity: 2)
 
 # Cart 2: Makkah
 cart2 = Cart.create!(branch: branches[2])
 cart2_bmi1 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[1])
 CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi1, branch_menu_item_quantity: 5)
-cart2_bmi2 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[5])
+cart2_bmi2 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[3])
 CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi2, branch_menu_item_quantity: 3)
 cart2_bmi3 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[7])
 CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi3, branch_menu_item_quantity: 2)

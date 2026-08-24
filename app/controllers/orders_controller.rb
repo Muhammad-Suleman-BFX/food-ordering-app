@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :get_branches, only: %i[start]
-  before_action :set_order, only: %i[show edit update destroy]
+  before_action :get_branches, only: %i[ start set_branch]
+  before_action :set_order, only: %i[ show edit update destroy ]
 
   def index
     @orders = Order.includes(:branch, :order_items).order(created_at: :desc)
