@@ -19,9 +19,13 @@ class BranchesController < ApplicationController
   def create
     @branch = Branch.new(branch_params)
     if @branch.save
-      redirect_to @branch
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.json { render json: @branch }
+        format.html { redirect_to @branch, notice: "Branch created successfully!" }
+      end
     else
-      render :new
+      render :new, status: 422
     end
   end
 
@@ -30,7 +34,11 @@ class BranchesController < ApplicationController
 
   def update
     if @branch.update(branch_params)
-      redirect_to @branch
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.json { render json: @branch }
+        format.html { redirect_to @branch, notice: "Branch updated successfully!" }
+      end
     else
       render :edit
     end
@@ -38,7 +46,11 @@ class BranchesController < ApplicationController
 
   def destroy
     @branch.destroy
-    redirect_to branches_path
+    # Respond conditionally based on the Accept header
+    respond_to do |format|
+      format.json { render json: { status: 200, message: "Branch deleted successfully!" } }
+      format.html { redirect_to branches_path, notice: "Branch deleted successfully!" }
+    end
   end
 
   def menu
@@ -48,6 +60,12 @@ class BranchesController < ApplicationController
                                  .order("branch_menu_items.created_at DESC")
 
     @cart = Cart.find_by(id: session[:cart_id])
+
+    # Respond conditionally based on the Accept header
+    respond_to do |format|
+      format.html
+      format.json { render json: @branch_menu_items }
+    end
   end
 
   private

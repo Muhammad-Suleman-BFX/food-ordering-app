@@ -10,6 +10,11 @@ class MenuItemsController < ApplicationController
   end
 
   def show
+    # Respond conditionally based on the Accept header
+    respond_to do |format|
+      format.html
+      format.json { render json: @menu_item }
+    end
   end
 
   def new
@@ -19,7 +24,11 @@ class MenuItemsController < ApplicationController
   def create
     @menu_item = MenuItem.new(menu_item_params)
     if @menu_item.save
-      redirect_to @menu_item, notice: "Menu item created."
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { redirect_to menu_items_path, notice: "Menu item created." }
+        format.json { render json: { status: 200, message: "Menu item created.", item: @menu_item } }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +39,11 @@ class MenuItemsController < ApplicationController
 
   def update
     if @menu_item.update(menu_item_params)
-      redirect_to @menu_item, notice: "Menu item updated."
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { redirect_to menu_items_path, notice: "Menu item updated." }
+        format.json { render json: { status: 200, message: "Menu item updated.", item: @menu_item } }
+      end
     else
       render :edit, status: :unprocessable_entity
     end

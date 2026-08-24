@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :menu_items
-  resources :carts, except: [ :index, :show ]
+  resources :carts, except: [ :index, :show, :create ]
   resources :cart_items, only: [ :create, :update, :destroy ]
   resources :orders, except: [ :edit, :update, :destroy ]
 end

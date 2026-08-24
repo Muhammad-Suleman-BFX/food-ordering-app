@@ -3,17 +3,6 @@ class BranchMenuItemsController < ApplicationController
   before_action :get_available_menu_items, only: %i[ new create edit update ]
   before_action :get_branch_menu_item, only: %i[ show edit update destroy ]
 
-  def index
-    @branch_menu_items = BranchMenuItem.includes(:branch, :menu_item).order("branch_menu_items.created_at DESC")
-    respond_to do |format|
-      format.html # Renders app/views/branch_menu_items/index.html.erb
-      format.json { render json: @branch_menu_items } # Renders JSON data
-    end
-  end
-
-  def show
-  end
-
   def new
     @branch_menu_item = BranchMenuItem.new(branch_id: @branch.id)
   end
@@ -21,9 +10,17 @@ class BranchMenuItemsController < ApplicationController
   def create
     @branch_menu_item = BranchMenuItem.new(branch_menu_item_params.merge(branch_id: @branch.id))
     if @branch_menu_item.save
-      redirect_to menu_branch_path(@branch.id), notice: "Branch menu item created."
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { redirect_to menu_branch_path(@branch.id), notice: "Branch menu item created." }
+        format.json { render json: { message: "Branch menu item created.", item: @branch_menu_item }, status: 200 }
+      end
     else
-      render :new, status: :unprocessable_entity
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { message: "Branch menu item cannot be created.", error: @branch_menu_item.errors.full_messages.first }, status: 422 }
+      end
     end
   end
 
@@ -32,18 +29,33 @@ class BranchMenuItemsController < ApplicationController
 
   def update
     if @branch_menu_item.update(branch_menu_item_params)
-      redirect_to menu_branch_path(@branch.id), notice: "Branch menu item updated."
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { redirect_to menu_branch_path(@branch.id), notice: "Branch menu item updated." }
+        format.json { render json: { message: "Branch menu item updated.", item: @branch_menu_item }, status: 200 }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { message: "Branch menu item cannot be updated.", error: @branch_menu_item.errors.full_messages.first }, status: 422 }
+      end
     end
   end
 
   def destroy
     if @branch_menu_item.destroy
-      byebug
-      redirect_to menu_branch_path(@branch.id), notice: "Branch menu item deleted.", status: :see_other
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { redirect_to menu_branch_path(@branch.id), notice: "Branch menu item deleted.", status: :see_other }
+        format.json { render json: { message: "Branch menu item deleted.", item: @branch_menu_item }, status: 200 }
+      end
     else
-      redirect_to menu_branch_path(@branch.id), alert: @branch_menu_item.errors.full_messages.to_sentence, status: :see_other
+      # Respond conditionally based on the Accept header
+      respond_to do |format|
+        format.html { redirect_to menu_branch_path(@branch.id), alert: @branch_menu_item.errors.full_messages.to_sentence, status: :see_other }
+        format.json { render json: { message: "Branch menu item cannot be updated.", error: @branch_menu_item.errors.full_messages.to_sentence }, status: 422 }
+      end
     end
   end
 

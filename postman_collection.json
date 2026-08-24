@@ -1,0 +1,697 @@
+{
+  "info": {
+    "_postman_id": "food-ordering-app-albaik-ksa",
+    "name": "Food Ordering App — Albaik KSA",
+    "description": "Postman collection for the Albaik KSA food ordering Rails app. Covers all CRUD endpoints and the ordering flow.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🏬 Branches",
+      "item": [
+        {
+          "name": "List Branches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/branches",
+              "host": ["{{base_url}}"],
+              "path": ["branches"]
+            },
+            "description": "Returns HTML list of all branches. Add `.json` for JSON response."
+          },
+          "response": [
+            {
+              "name": "200 OK — HTML",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": "{{base_url}}/branches"
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }],
+              "body": "<html>…branches list…</html>"
+            },
+            {
+              "name": "200 OK — JSON",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{ "key": "Accept", "value": "application/json" }],
+                "url": "{{base_url}}/branches"
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Albaik — Jeddah Al Andalus\",\n    \"address\": \"Al Andalus District, Jeddah 23326, KSA\",\n    \"latitude\": \"21.543333\",\n    \"longitude\": \"39.172778\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Show Branch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/branches/:id",
+              "host": ["{{base_url}}"],
+              "path": ["branches", ":id"],
+              "variable": [{ "key": "id", "value": "1", "description": "Branch ID" }]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK — JSON",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{ "key": "Accept", "value": "application/json" }],
+                "url": "{{base_url}}/branches/1"
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Albaik — Jeddah Al Andalus\",\n  \"address\": \"Al Andalus District, Jeddah 23326, KSA\",\n  \"latitude\": \"21.543333\",\n  \"longitude\": \"39.172778\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Branch",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Riyadh Al Olaya\",\n    \"address\": \"Al Olaya District, Tahlia Street, Riyadh 12214, KSA\",\n    \"latitude\": 24.690230,\n    \"longitude\": 46.685510\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/branches",
+              "host": ["{{base_url}}"],
+              "path": ["branches"]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "header": [{ "key": "Location", "value": "{{base_url}}/branches/5" }],
+              "body": "{\n  \"id\": 5,\n  \"name\": \"Albaik — Riyadh Al Olaya\",\n  \"address\": \"Al Olaya District, Tahlia Street, Riyadh 12214, KSA\",\n  \"latitude\": \"24.690230\",\n  \"longitude\": \"46.685510\"\n}"
+            },
+            {
+              "name": "422 Unprocessable — Missing name",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"errors\": [\"Name can't be blank\", \"Address can't be blank\"]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Branch",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Riyadh Al Olaya Updated\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/branches/:id",
+              "host": ["{{base_url}}"],
+              "path": ["branches", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Albaik — Riyadh Al Olaya Updated\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Branch",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/branches/:id",
+              "host": ["{{base_url}}"],
+              "path": ["branches", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "Get Branch Menu (Customer)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "text/html" }],
+            "url": {
+              "raw": "{{base_url}}/branches/:id/menu",
+              "host": ["{{base_url}}"],
+              "path": ["branches", ":id", "menu"],
+              "variable": [{ "key": "id", "value": "1" }]
+            },
+            "description": "Customer-facing menu. Shows only available items. Requires active cart session for add-to-cart buttons."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "body": "<html>…menu items with Add buttons…</html>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🍗 Menu Items",
+      "item": [
+        {
+          "name": "List Menu Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/menu_items",
+              "host": ["{{base_url}}"],
+              "path": ["menu_items"]
+            }
+          }
+        },
+        {
+          "name": "Show Menu Item",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/menu_items/:id",
+              "host": ["{{base_url}}"],
+              "path": ["menu_items", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Create Menu Item",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu_item\": {\n    \"name\": \"Broasted Chicken — 12 Pcs\",\n    \"description\": \"Party size crispy broasted chicken\",\n    \"base_availability\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/menu_items",
+              "host": ["{{base_url}}"],
+              "path": ["menu_items"]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 3,\n  \"name\": \"Broasted Chicken — 12 Pcs\",\n  \"description\": \"Party size crispy broasted chicken\",\n  \"base_availability\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Menu Item",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu_item\": {\n    \"base_availability\": false\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/menu_items/:id",
+              "host": ["{{base_url}}"],
+              "path": ["menu_items", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Menu Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/menu_items/:id",
+              "host": ["{{base_url}}"],
+              "path": ["menu_items", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Branch Menu Items",
+      "item": [
+        {
+          "name": "Create Branch Menu Item",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"branch_menu_item\": {\n    \"menu_item_id\": 1,\n    \"menu_item_price\": 19.00,\n    \"menu_item_availability\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/branches/:branch_id/branch_menu_items",
+              "host": ["{{base_url}}"],
+              "path": ["branches", ":branch_id", "branch_menu_items"],
+              "variable": [
+                { "key": "branch_id", "value": "1", "description": "Branch ID" }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"branch_id\": 1,\n  \"menu_item_id\": 1,\n  \"menu_item_price\": \"19.00\",\n  \"menu_item_availability\": true\n}"
+            },
+            {
+              "name": "422 Duplicate",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "body": "{\n  \"errors\": [\"Menu item is already associated with this branch\"]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Branch Menu Item",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"branch_menu_item\": {\n    \"menu_item_price\": 22.00,\n    \"menu_item_availability\": false\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/branches/:branch_id/branch_menu_items/:id",
+              "host": ["{{base_url}}"],
+              "path": ["branches", ":branch_id", "branch_menu_items", ":id"],
+              "variable": [
+                { "key": "branch_id", "value": "1" },
+                { "key": "id", "value": "1", "description": "Branch Menu Item ID" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Branch Menu Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/branches/:branch_id/branch_menu_items/:id",
+              "host": ["{{base_url}}"],
+              "path": ["branches", ":branch_id", "branch_menu_items", ":id"],
+              "variable": [
+                { "key": "branch_id", "value": "1" },
+                { "key": "id", "value": "1" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛒 Carts",
+      "item": [
+        {
+          "name": "List All Carts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/carts",
+              "host": ["{{base_url}}"],
+              "path": ["carts"]
+            }
+          }
+        },
+        {
+          "name": "Show Cart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/carts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["carts", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Current Cart (Session)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Cookie", "value": "session_id=abc123", "description": "Rails session cookie" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cart",
+              "host": ["{{base_url}}"],
+              "path": ["cart"]
+            },
+            "description": "Shows the active cart from session. Requires a session with cart_id set."
+          },
+          "response": [
+            {
+              "name": "200 OK — Cart with items",
+              "status": "OK",
+              "code": 200,
+              "body": "<html>…Cart #1 with items…</html>"
+            },
+            {
+              "name": "302 Redirect — No active cart",
+              "status": "Found",
+              "code": 302,
+              "header": [{ "key": "Location", "value": "{{base_url}}/order/start" }],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "Create Cart",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cart\": {\n    \"branch_id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/carts",
+              "host": ["{{base_url}}"],
+              "path": ["carts"]
+            }
+          }
+        },
+        {
+          "name": "Delete Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/carts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["carts", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛍️ Cart Items",
+      "item": [
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" },
+              { "key": "Cookie", "value": "session_id=abc123" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "branch_menu_item_id", "value": "1", "description": "BranchMenuItem ID to add" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/cart_items",
+              "host": ["{{base_url}}"],
+              "path": ["cart_items"]
+            },
+            "description": "Adds an available item to the session cart. Quantity defaults to 1. If item already in cart, increments quantity."
+          },
+          "response": [
+            {
+              "name": "302 Redirect — Added",
+              "status": "Found",
+              "code": 302,
+              "header": [{ "key": "Location", "value": "{{base_url}}/cart" }],
+              "body": ""
+            },
+            {
+              "name": "302 Redirect — Unavailable item",
+              "status": "Found",
+              "code": 302,
+              "header": [{ "key": "Location", "value": "{{base_url}}/cart" }],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "Update Cart Item Quantity",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cart_item\": {\n    \"branch_menu_item_quantity\": 3\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/cart_items/:id",
+              "host": ["{{base_url}}"],
+              "path": ["cart_items", ":id"],
+              "variable": [{ "key": "id", "value": "1", "description": "CartItem ID" }]
+            },
+            "description": "Set quantity to 0 to remove the item."
+          },
+          "response": [
+            {
+              "name": "302 — Quantity updated",
+              "status": "Found",
+              "code": 302,
+              "body": ""
+            },
+            {
+              "name": "302 — Item removed (qty=0)",
+              "status": "Found",
+              "code": 302,
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "Remove Cart Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/cart_items/:id",
+              "host": ["{{base_url}}"],
+              "path": ["cart_items", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📋 Orders",
+      "item": [
+        {
+          "name": "List Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": ["{{base_url}}"],
+              "path": ["orders"]
+            }
+          }
+        },
+        {
+          "name": "Show Order",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/orders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["orders", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK — Order confirmation",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"branch_id\": 1,\n  \"order_type\": \"pickup\",\n  \"status\": \"pending\",\n  \"total_price\": \"57.00\",\n  \"order_items\": [\n    {\n      \"menu_item_name\": \"Broasted Chicken — 4 Pcs\",\n      \"menu_item_price\": \"19.00\",\n      \"menu_item_quantity\": 3\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Order (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order\": {\n    \"branch_id\": 1,\n    \"order_type\": \"delivery\",\n    \"status\": \"confirmed\",\n    \"total_price\": 55.00\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": ["{{base_url}}"],
+              "path": ["orders"]
+            }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order\": {\n    \"status\": \"preparing\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["orders", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Delete Order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/orders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["orders", ":id"],
+              "variable": [{ "key": "id", "value": "1" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔄 Ordering Flow",
+      "item": [
+        {
+          "name": "Step 1 — Start Order (Form)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/order/start",
+              "host": ["{{base_url}}"],
+              "path": ["order", "start"]
+            },
+            "description": "HTML form. Select order type and branch (or enter GPS coordinates)."
+          }
+        },
+        {
+          "name": "Step 2 — Set Branch & Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "order_type", "value": "pickup", "description": "pickup | delivery" },
+                { "key": "branch_id", "value": "1", "description": "Branch ID (or leave blank with lat/lng)" },
+                { "key": "latitude", "value": "", "description": "Optional: GPS latitude" },
+                { "key": "longitude", "value": "", "description": "Optional: GPS longitude" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/order/set_branch",
+              "host": ["{{base_url}}"],
+              "path": ["order", "set_branch"]
+            },
+            "description": "Creates a cart and stores it in session. Redirects to branch menu."
+          },
+          "response": [
+            {
+              "name": "302 — Success",
+              "status": "Found",
+              "code": 302,
+              "header": [{ "key": "Location", "value": "{{base_url}}/branches/1/menu" }],
+              "body": ""
+            },
+            {
+              "name": "422 — Validation fail (persisted)",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "body": "<html>…form with alert banner + preserved inputs…</html>"
+            }
+          ]
+        },
+        {
+          "name": "Step 3 — Place Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Cookie", "value": "session_id=abc123", "description": "Must include active session with cart_id" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/place",
+              "host": ["{{base_url}}"],
+              "path": ["orders", "place"]
+            },
+            "description": "Converts session cart to Order. Creates OrderItems with price snapshot. Clears cart session."
+          },
+          "response": [
+            {
+              "name": "302 — Order placed",
+              "status": "Found",
+              "code": 302,
+              "header": [{ "key": "Location", "value": "{{base_url}}/orders/5" }],
+              "body": ""
+            },
+            {
+              "name": "302 — Empty cart",
+              "status": "Found",
+              "code": 302,
+              "header": [{ "key": "Location", "value": "{{base_url}}/cart" }],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
