@@ -3,7 +3,10 @@ class Cart < ApplicationRecord
   has_many :cart_items, dependent: :destroy
   has_many :branch_menu_items, through: :cart_items
 
+  enum :order_type, { pickup: 0, delivery: 1 }
+
   validates :branch_id, presence: true
+  validates :order_type, presence: true, inclusion: { in: order_types.keys }
   validate :all_items_must_belong_to_same_branch
 
   def total_price

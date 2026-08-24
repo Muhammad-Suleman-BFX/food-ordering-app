@@ -2,8 +2,8 @@ class Order < ApplicationRecord
   belongs_to :branch
   has_many :order_items, dependent: :destroy
 
-  enum order_type: { pickup: 0, delivery: 1 }
-  enum status: {
+  enum :order_type, { pickup: 0, delivery: 1 }
+  enum :status, {
     pending: 0,
     confirmed: 1,
     preparing: 2,

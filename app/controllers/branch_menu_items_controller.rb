@@ -40,7 +40,6 @@ class BranchMenuItemsController < ApplicationController
 
   def destroy
     if @branch_menu_item.destroy
-      byebug
       redirect_to menu_branch_path(@branch.id), notice: "Branch menu item deleted.", status: :see_other
     else
       redirect_to menu_branch_path(@branch.id), alert: @branch_menu_item.errors.full_messages.to_sentence, status: :see_other

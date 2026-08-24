@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_20_024432) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_24_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_20_024432) do
     t.bigint "branch_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order_type", default: 0, null: false
     t.index ["branch_id"], name: "index_carts_on_branch_id"
   end
 

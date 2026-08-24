@@ -1,14 +1,6 @@
-<% coming_from_branches_path = request&.referer&.include?("branches") %>
-
-<div class="page-header" style="<%= coming_from_branches_path ? "" : "justify-content: end"%>">
-  <% if coming_from_branches_path %>
-    <%= link_to "← Back", branch_path, class: "btn btn-secondary" %>
-  <% end %>
-  <% if !coming_from_branches_path && @cart %>
-    <%= link_to "🛒 Cart (#{@cart.cart_items.sum(:branch_menu_item_quantity) rescue 0})", current_cart_path, class: "btn btn-primary" %>
-  <% else %>
-    <%= link_to "+ Add Item into Branch", new_branch_branch_menu_item_path(@branch), class: "btn btn-primary" %>
-  <% end %>
+<div class="page-header">
+  <%= link_to "← Back", branch_path(@branch), class: "btn btn-secondary" %>
+  <%= link_to "+ Add Item into Branch", new_branch_branch_menu_item_path(@branch), class: "btn btn-primary" %>
 </div>
 
 <h1 style="margin-bottom: 8px;"><%= @branch.name %></h1>
@@ -26,25 +18,16 @@
             <% end %>
             <span class="list-meta" style="margin-top: 4px;">SAR <%= number_with_precision(bmi.menu_item_price, precision: 2) %></span>
           </div>
-          <% if coming_from_branches_path %>
-            <%= link_to edit_branch_branch_menu_item_path(@branch, bmi),
-                class: "btn btn-secondary",
-                style: "white-space: nowrap; flex-shrink: 0;" do %>
-              Edit
-            <% end %>
-            <%= button_to branch_branch_menu_item_path(@branch, bmi),
-                method: :delete,
-                class: "btn btn-danger",
-                style: "white-space: nowrap; flex-shrink: 0;" do %>
-              Delete
-            <% end %>
-          <% elsif bmi.is_available_at_branch? %>
-            <%= button_to cart_items_path(branch_menu_item_id: bmi.id),
-                method: :post,
-                class: "btn btn-primary",
-                style: "white-space: nowrap; flex-shrink: 0;" do %>
-              Add to cart
-            <% end %>
+          <%= link_to edit_branch_branch_menu_item_path(@branch, bmi),
+              class: "btn btn-secondary",
+              style: "white-space: nowrap; flex-shrink: 0;" do %>
+            Edit
+          <% end %>
+          <%= button_to branch_branch_menu_item_path(@branch, bmi),
+              method: :delete,
+              class: "btn btn-danger",
+              style: "white-space: nowrap; flex-shrink: 0;" do %>
+            Delete
           <% end %>
         </div>
       </li>
