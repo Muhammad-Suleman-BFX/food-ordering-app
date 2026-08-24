@@ -27,9 +27,9 @@
           <span class="brand-name">Food Ordering App</span>
         <% end %>
         <nav class="main-nav">
+          <%= link_to "Order", root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" %>
           <%= link_to "Branches", branches_path, class: "nav-link #{current_page?(branches_path) ? 'active' : ''}" %>
           <%= link_to "Menu", menu_items_path, class: "nav-link #{current_page?(menu_items_path) ? 'active' : ''}" %>
-          <%= link_to "Cart", current_cart_path, class: "nav-link #{current_page?(current_cart_path) ? 'active' : ''}" %>
           <%= link_to "Orders", orders_path, class: "nav-link #{current_page?(orders_path) ? 'active' : ''}" %>
         </nav>
       </div>

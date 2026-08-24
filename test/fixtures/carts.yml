@@ -1,2 +1,7 @@
 one:
   branch: jeddah
+  order_type: pickup
+
+delivery:
+  branch: makkah
+  order_type: delivery

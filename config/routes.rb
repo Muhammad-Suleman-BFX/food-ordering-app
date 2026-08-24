@@ -1,14 +1,26 @@
 Rails.application.routes.draw do
-  root "orders#start"
+  root "home#index"
 
-  # Ordering flow
-  get   "order/start",        to: "orders#start",        as: :order_start
-  post  "order/set_branch",   to: "orders#set_branch",   as: :order_set_branch
-  post  "orders/place",       to: "orders#place",        as: :place_order
+  # API (JSON only) — customer ordering
+  namespace :api do
+    resources :branches, only: [ :index ] do
+      collection do
+        get :nearest
+      end
+      member do
+        get :menu
+      end
+    end
 
-  # Current cart
-  get   "cart",               to: "carts#current",       as: :current_cart
+    resources :carts, only: [ :create, :show ] do
+      member do
+        post :checkout
+      end
+      resources :items, controller: "cart_items", only: [ :create, :update, :destroy ]
+    end
+  end
 
+  # Admin HTML
   resources :branches do
     member do
       get :menu
@@ -17,7 +29,5 @@ Rails.application.routes.draw do
   end
 
   resources :menu_items
-  resources :carts, except: [ :index, :show ]
-  resources :cart_items, only: [ :create, :update, :destroy ]
-  resources :orders, except: [ :edit, :update, :destroy ]
+  resources :orders, only: [ :index, :show ]
 end

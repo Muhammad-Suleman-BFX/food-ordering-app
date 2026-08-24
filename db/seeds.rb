@@ -155,7 +155,7 @@ puts "Created #{branch_menu_items.count} branch-menu-item links"
 puts "Creating carts..."
 
 # Cart 1: Jeddah Al Andalus
-cart1 = Cart.create!(branch: branches[0])
+cart1 = Cart.create!(branch: branches[0], order_type: :pickup)
 cart1_bmi1 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[0])
 CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi1, branch_menu_item_quantity: 1)
 cart1_bmi2 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[1])
@@ -164,7 +164,7 @@ cart1_bmi3 = BranchMenuItem.find_by(branch: branches[0], menu_item: menu_items[7
 CartItem.create!(cart: cart1, branch_menu_item: cart1_bmi3, branch_menu_item_quantity: 3)
 
 # Cart 2: Makkah
-cart2 = Cart.create!(branch: branches[2])
+cart2 = Cart.create!(branch: branches[2], order_type: :delivery)
 cart2_bmi1 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[1])
 CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi1, branch_menu_item_quantity: 5)
 cart2_bmi2 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[3])
@@ -173,7 +173,7 @@ cart2_bmi3 = BranchMenuItem.find_by(branch: branches[2], menu_item: menu_items[7
 CartItem.create!(cart: cart2, branch_menu_item: cart2_bmi3, branch_menu_item_quantity: 2)
 
 # Cart 3: Riyadh
-cart3 = Cart.create!(branch: branches[4])
+cart3 = Cart.create!(branch: branches[4], order_type: :pickup)
 cart3_bmi1 = BranchMenuItem.find_by(branch: branches[4], menu_item: menu_items[0])
 CartItem.create!(cart: cart3, branch_menu_item: cart3_bmi1, branch_menu_item_quantity: 9)
 cart3_bmi2 = BranchMenuItem.find_by(branch: branches[4], menu_item: menu_items[3])

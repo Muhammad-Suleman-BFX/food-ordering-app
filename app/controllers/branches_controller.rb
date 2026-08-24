@@ -19,9 +19,9 @@ class BranchesController < ApplicationController
   def create
     @branch = Branch.new(branch_params)
     if @branch.save
-      redirect_to @branch
+      redirect_to @branch, notice: "Branch created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -30,15 +30,15 @@ class BranchesController < ApplicationController
 
   def update
     if @branch.update(branch_params)
-      redirect_to @branch
+      redirect_to @branch, notice: "Branch updated."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @branch.destroy
-    redirect_to branches_path
+    redirect_to branches_path, notice: "Branch deleted.", status: :see_other
   end
 
   def menu
@@ -46,8 +46,6 @@ class BranchesController < ApplicationController
                                  .includes(:menu_item)
                                  .where(menu_items: { base_availability: true })
                                  .order("branch_menu_items.created_at DESC")
-
-    @cart = Cart.find_by(id: session[:cart_id])
   end
 
   private
