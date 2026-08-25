@@ -1,5 +1,5 @@
 class Branch < ApplicationRecord
-  has_many :branch_menu_items, dependent: :destroy
+  has_many :branch_menu_items, dependent: :restrict_with_error
   has_many :menu_items, through: :branch_menu_items
   has_many :carts, dependent: :destroy
   has_many :orders, dependent: :restrict_with_error

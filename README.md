@@ -1,4 +1,4 @@
-# Food Ordering App — API-First
+# Food Ordering App - API-First
 
 A full-featured food ordering web application built with **Ruby on Rails 7.2**. The app is now **API-first**: all customer-facing interactions go through a JSON REST API, and the browser frontend is a lightweight JavaScript single-page application (SPA) that consumes those endpoints.
 
@@ -24,21 +24,21 @@ The app lets customers browse branch-specific menus, build a cart, and place pic
    └──────────┘                     └──────────────┘
 ```
 
-- **API layer** — `app/controllers/api/` controllers inherit from `Api::BaseController` (an `ActionController::API` subclass). Every endpoint returns JSON with appropriate HTTP status codes and structured validation errors.
-- **Frontend** — `app/javascript/ordering_app.js` is a dependency-free SPA that renders the 5-step ordering flow by calling the API. The cart ID is persisted in `localStorage`, so no server session is required.
-- **Admin pages** — HTML CRUD pages for branches, menu items, branch menu items, and orders remain available for management.
+- **API layer** - `app/controllers/api/` controllers inherit from `Api::BaseController` (an `ActionController::API` subclass). Every endpoint returns JSON with appropriate HTTP status codes and structured validation errors.
+- **Frontend** - `app/javascript/ordering_app.js` is a dependency-free SPA that renders the 5-step ordering flow by calling the API. The cart ID is persisted in `localStorage`, so no server session is required.
+- **Admin pages** - HTML CRUD pages for branches, menu items, branch menu items, and orders remain available for management.
 
 ## Features
 
-- **Branch Management** — Manage restaurant branches with name, address, and GPS coordinates (latitude/longitude).
-- **Menu Items** — Central catalog of menu items with a global `base_availability` flag.
-- **Per-Branch Menus** — Each branch offers its own subset of menu items with branch-specific pricing and availability (`BranchMenuItem`).
-- **Smart Branch Selection** — When ordering, customers can pick a branch manually or provide GPS coordinates to auto-detect the **nearest branch**.
-- **Cart** — A cart is created via the API and its ID is stored in `localStorage`; items are validated to belong to the same branch.
-- **Order Types** — Support for **Pickup** and **Delivery** orders.
-- **Order Status Tracking** — Orders flow through `pending → confirmed → preparing → ready → out_for_delivery → completed` (or `cancelled`).
-- **Price Snapshots** — Order items store a snapshot of the item name and price at the time of ordering, so later menu changes don't affect historical orders.
-- **Validation & Business Rules** — Enforces availability rules, same-branch cart consistency, positive pricing, and prevents modification of cancelled orders.
+- **Branch Management** - Manage restaurant branches with name, address, and GPS coordinates (latitude/longitude).
+- **Menu Items** - Central catalog of menu items with a global `base_availability` flag.
+- **Per-Branch Menus** - Each branch offers its own subset of menu items with branch-specific pricing and availability (`BranchMenuItem`).
+- **Smart Branch Selection** - When ordering, customers can pick a branch manually or provide GPS coordinates to auto-detect the **nearest branch**.
+- **Cart** - A cart is created via the API and its ID is stored in `localStorage`; items are validated to belong to the same branch.
+- **Order Types** - Support for **Pickup** and **Delivery** orders.
+- **Order Status Tracking** - Orders flow through `pending → confirmed → preparing → ready → out_for_delivery → completed` (or `cancelled`).
+- **Price Snapshots** - Order items store a snapshot of the item name and price at the time of ordering, so later menu changes don't affect historical orders.
+- **Validation & Business Rules** - Enforces availability rules, same-branch cart consistency, positive pricing, and prevents modification of cancelled orders.
 
 ## Tech Stack
 
@@ -127,15 +127,46 @@ All endpoints return JSON. Errors use the shape `{ "error": "...", "details": {.
 | 404  | Not Found                | Record not found (branch, cart, or cart item).             |
 | 422  | Unprocessable Entity     | Validation error or business-rule violation.               |
 
+## Postman Collection
+
+A ready-to-use [Postman] collection is included at the project root:
+
+```
+postman_collection.json
+```
+
+It contains pre-configured requests for both the **API (Customer Flow)** endpoints and the **Admin** HTML endpoints. To use it:
+
+1. Open Postman and click **Import**.
+2. Select `postman_collection.json` from the project root.
+3. Set the collection variables (see below) before sending requests.
+
+### Collection Variables
+
+The following collection variables are required for the endpoints to work:
+
+| Variable              | Default                 | Description                                                                 |
+|-----------------------|-----------------------  |-----------------------------------------------------------------------------|
+| `base_url`            | `http://localhost:3000` | Base URL of the running Rails server.                                       |
+| `X-CSRF-Token`        | *(empty)*               | CSRF token required for admin **POST / PATCH / DELETE** requests. Obtain it from the Rails app (e.g. from a rendered form's `authenticity_token`) and paste it here.                                                             |
+| `cart_id`             | `1`                     | Cart ID used by the cart and cart-item endpoints.                          |
+| `branch_id`           | `1`                     | Branch ID used by branch menu and admin branch endpoints.                  |
+| `item_id`             | `1`                     | Cart item ID used by the cart-item update/remove endpoints.                |
+| `menu_item_id`        | `1`                     | Menu item ID used by the admin menu-item endpoints.                        |
+| `branch_menu_item_id` | `1`                     | Branch menu item ID used by the admin branch-menu-item endpoints.          |
+| `order_id`            | `1`                     | Order ID used by the admin order endpoints.                                |
+
+> **Note:** The `X-CSRF-Token` variable is only required for admin requests that mutate data (POST, PATCH, DELETE). GET requests (list, show, new/edit forms) do not need it.
+
 ## Customer Ordering Flow
 
 The browser SPA (`app/javascript/ordering_app.js`) drives the full flow through the API:
 
-1. **Start** — The customer chooses **Pickup** or **Delivery**, then either selects a branch **or** enters GPS coordinates (or uses browser geolocation). If GPS is used, the app calls `GET /api/branches/nearest`.
-2. **Create Cart** — `POST /api/carts` creates a cart for the resolved branch; the cart ID is saved to `localStorage`.
-3. **Browse Menu** — `GET /api/branches/:id/menu` returns available items; the customer adds items via `POST /api/carts/:id/items`. Unavailable items cannot be added.
-4. **Review Cart** — `GET /api/carts/:id` shows items, quantities, line totals, and the cart total. Quantities are adjusted with `PATCH` and items removed with `DELETE`.
-5. **Checkout** — `POST /api/carts/:id/checkout` creates an order (with price snapshots) and destroys the cart. The confirmation screen shows the order number, status, and items.
+1. **Start** - The customer chooses **Pickup** or **Delivery**, then either selects a branch **or** enters GPS coordinates (or uses browser geolocation). If GPS is used, the app calls `GET /api/branches/nearest`.
+2. **Create Cart** - `POST /api/carts` creates a cart for the resolved branch; the cart ID is saved to `localStorage`.
+3. **Browse Menu** - `GET /api/branches/:id/menu` returns available items; the customer adds items via `POST /api/carts/:id/items`. Unavailable items cannot be added.
+4. **Review Cart** - `GET /api/carts/:id` shows items, quantities, line totals, and the cart total. Quantities are adjusted with `PATCH` and items removed with `DELETE`.
+5. **Checkout** - `POST /api/carts/:id/checkout` creates an order (with price snapshots) and destroys the cart. The confirmation screen shows the order number, status, and items.
 
 ## Project Structure
 
@@ -185,9 +216,9 @@ The API is covered by request tests in `test/controllers/api/` and end-to-end AP
 
 ## Assumptions and Design Decisions
 
-- **API-first customer path** — Customer ordering uses JSON endpoints and a lightweight SPA. There is no server-session cart flow. HTML pages are admin-only (branches, menu items, branch menus, order history).
-- **Stateless carts** — Cart IDs are stored in `localStorage` rather than server sessions so the SPA does not depend on cookies.
-- **Nearest branch** — Delivery uses a simple absolute lat/lng distance ranking for the nearest-branch lookup (sufficient for this dataset size).
-- **Price snapshots** — `OrderItem` stores name and price at checkout so later menu edits do not change historical orders.
-- **Availability** — An item must be available both globally (`MenuItem#base_availability`) and at the branch (`BranchMenuItem#menu_item_availability`) to be ordered.
-- **Order type on cart** — `order_type` is chosen up front and copied onto the `Order` at checkout.
+- **API-first customer path** - Customer ordering uses JSON endpoints and a lightweight SPA. There is no server-session cart flow. HTML pages are admin-only (branches, menu items, branch menus, order history).
+- **Stateless carts** - Cart IDs are stored in `localStorage` rather than server sessions so the SPA does not depend on cookies.
+- **Nearest branch** - Delivery uses a simple absolute lat/lng distance ranking for the nearest-branch lookup (sufficient for this dataset size).
+- **Price snapshots** - `OrderItem` stores name and price at checkout so later menu edits do not change historical orders.
+- **Availability** - An item must be available both globally (`MenuItem#base_availability`) and at the branch (`BranchMenuItem#menu_item_availability`) to be ordered.
+- **Order type on cart** - `order_type` is chosen up front and copied onto the `Order` at checkout.

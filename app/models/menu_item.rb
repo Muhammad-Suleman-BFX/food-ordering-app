@@ -1,5 +1,5 @@
 class MenuItem < ApplicationRecord
-  has_many :branch_menu_items, dependent: :destroy
+  has_many :branch_menu_items, dependent: :restrict_with_error
   has_many :branches, through: :branch_menu_items
 
   validates :name, presence: true, length: { maximum: 255 }
