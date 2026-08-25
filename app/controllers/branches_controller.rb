@@ -38,7 +38,11 @@ class BranchesController < ApplicationController
 
   def destroy
     @branch.destroy
-    redirect_to branches_path, notice: "Branch deleted.", status: :see_other
+    if @branch.destroyed?
+      redirect_to branches_path, notice: "Branch deleted.", status: :see_other
+    else
+      redirect_to branch_path(@branch), status: :see_other, alert: @branch.errors.full_messages.to_sentence
+    end
   end
 
   def menu
