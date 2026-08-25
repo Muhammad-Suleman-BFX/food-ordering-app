@@ -37,8 +37,11 @@ class MenuItemsController < ApplicationController
   end
 
   def destroy
-    @menu_item.destroy
-    redirect_to menu_items_path, notice: "Menu item deleted.", status: :see_other
+    if @menu_item.destroy
+      redirect_to menu_items_path, notice: "Menu item deleted.", status: :see_other
+    else
+      redirect_to @menu_item, status: :see_other, alert: @menu_item.errors.full_messages.to_sentence
+    end
   end
 
   private

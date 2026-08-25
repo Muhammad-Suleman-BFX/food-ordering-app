@@ -47,9 +47,9 @@ class MenuItemTest < ActiveSupport::TestCase
     assert @menu_item.valid?
   end
 
-  test "should destroy associated branch_menu_items when destroyed" do
+  test "should not destroy associated branch_menu_items if menu_item linked with branch" do
     menu_item = menu_items(:chicken_4pc)
-    assert_difference "BranchMenuItem.count", -1 do
+    assert_difference "BranchMenuItem.count", 0 do
       menu_item.destroy
     end
   end

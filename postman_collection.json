@@ -1,0 +1,3149 @@
+{
+  "info": {
+    "_postman_id": "e777d56f-4ab9-4875-9e0c-69cc443bc359",
+    "name": "Food Ordering App",
+    "description": "Postman collection for the Albaik KSA food ordering app. It is split into two folders:\n\n1. **API (Customer Flow)** - JSON endpoints used by the mobile/web customer app: list branches → create a cart → browse a branch menu → add/update/remove cart items → checkout → receive an order confirmation.\n\n2. **Admin** - HTML form endpoints used by staff to manage branches, menu items, branch menu items, and view orders.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57303743"
+  },
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "Branches",
+          "item": [
+            {
+              "name": "List Branches",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/branches",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "branches"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/branches",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "branches"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Albaik — Jeddah Al Andalus\",\n    \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n    \"latitude\": \"21.543333\",\n    \"longitude\": \"39.172778\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Albaik — Jeddah Al Hamra\",\n    \"address\": \"Al Hamra District, Palestine Street, Jeddah 23324, KSA\",\n    \"latitude\": \"21.485811\",\n    \"longitude\": \"39.192504\"\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Nearest Branch",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/branches/nearest?latitude=21.5&longitude=39.2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "branches",
+                    "nearest"
+                  ],
+                  "query": [
+                    {
+                      "key": "latitude",
+                      "value": "21.5",
+                      "description": "Required: GPS latitude"
+                    },
+                    {
+                      "key": "longitude",
+                      "value": "39.2",
+                      "description": "Required: GPS longitude"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/branches/nearest?latitude=21.5&longitude=39.2",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "branches",
+                        "nearest"
+                      ],
+                      "query": [
+                        {
+                          "key": "latitude",
+                          "value": "21.5",
+                          "description": "Required: GPS latitude"
+                        },
+                        {
+                          "key": "longitude",
+                          "value": "39.2",
+                          "description": "Required: GPS longitude"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"name\": \"Albaik — Jeddah Al Andalus\",\n  \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n  \"latitude\": \"21.543333\",\n  \"longitude\": \"39.172778\"\n}"
+                },
+                {
+                  "name": "400 Bad Request — Missing coordinates",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/branches/nearest?latitude=21.5&longitude=39.2",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "branches",
+                        "nearest"
+                      ],
+                      "query": [
+                        {
+                          "key": "latitude",
+                          "value": "21.5",
+                          "description": "Required: GPS latitude"
+                        },
+                        {
+                          "key": "longitude",
+                          "value": "39.2",
+                          "description": "Required: GPS longitude"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Both latitude and longitude are required\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Branch Menu",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/branches/{{branch_id}}/menu",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "branches",
+                    "{{branch_id}}",
+                    "menu"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/branches/{{branch_id}}/menu",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "branches",
+                        "{{branch_id}}",
+                        "menu"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": 1,\n    \"menu_item_id\": 1,\n    \"name\": \"Broasted Chicken — 4 Pcs\",\n    \"description\": \"Crispy golden broasted chicken, 4 pieces with signature garlic sauce\",\n    \"price\": \"19.00\",\n    \"available\": true\n  },\n  {\n    \"id\": 2,\n    \"menu_item_id\": 2,\n    \"name\": \"Broasted Chicken — 8 Pcs\",\n    \"description\": \"Family size crispy broasted chicken, 8 pieces with garlic sauce\",\n    \"price\": \"35.00\",\n    \"available\": true\n  }\n]"
+                },
+                {
+                  "name": "404 Not Found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/branches/{{branch_id}}/menu",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "branches",
+                        "{{branch_id}}",
+                        "menu"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Branch not found\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Carts",
+          "item": [
+            {
+              "name": "Create Cart",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cart\": {\n    \"branch_id\": {{branch_id}},\n    \"order_type\": \"pickup\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/carts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 Created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cart\": {\n    \"branch_id\": {{branch_id}},\n    \"order_type\": \"pickup\"\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"branch_id\": {{branch_id}},\n  \"order_type\": \"pickup\",\n  \"items\": [],\n  \"total_price\": \"0.00\",\n  \"total_items_count\": 0\n}"
+                },
+                {
+                  "name": "422 Unprocessable Entity",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cart\": {\n    \"branch_id\": {{branch_id}},\n    \"order_type\": \"pickup\"\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Branch must exist\",\n  \"details\": {\n    \"branch\": [\"must exist\"]\n  }\n}"
+                }
+              ]
+            },
+            {
+              "name": "Show Cart",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/carts/{{cart_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "{{cart_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cart_id",
+                      "value": "1",
+                      "description": "Cart ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"branch_id\": {{branch_id}},\n  \"order_type\": \"pickup\",\n  \"items\": [\n    {\n      \"id\": 1,\n      \"branch_menu_item_id\": 1,\n      \"name\": \"Broasted Chicken — 4 Pcs\",\n      \"price\": \"19.00\",\n      \"quantity\": 2,\n      \"line_total\": \"38.00\"\n    }\n  ],\n  \"total_price\": \"38.00\",\n  \"total_items_count\": 2\n}"
+                },
+                {
+                  "name": "404 Not Found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Cart not found\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Checkout Cart",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/carts/{{cart_id}}/checkout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "{{cart_id}}",
+                    "checkout"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cart_id",
+                      "value": "1",
+                      "description": "Cart ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 Created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/checkout",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "checkout"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 5,\n  \"branch_id\": {{branch_id}},\n  \"order_type\": \"pickup\",\n  \"status\": \"pending\",\n  \"total_price\": \"38.00\",\n  \"order_items\": [\n    {\n      \"menu_item_name\": \"Broasted Chicken — 4 Pcs\",\n      \"menu_item_price\": \"19.00\",\n      \"menu_item_quantity\": 2\n    }\n  ]\n}"
+                },
+                {
+                  "name": "422 Unprocessable Entity — Empty cart",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/checkout",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "checkout"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Your cart is empty. Add items before placing an order.\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Cart Items",
+          "item": [
+            {
+              "name": "Add Item to Cart",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branch_menu_item_id\": {{branch_menu_item_id}}\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/carts/{{cart_id}}/items",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "{{cart_id}}",
+                    "items"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cart_id",
+                      "value": "1",
+                      "description": "Cart ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 Created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch_menu_item_id\": {{branch_menu_item_id}}\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "items"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"branch_menu_item_id\": {{branch_menu_item_id}},\n  \"name\": \"Broasted Chicken — 4 Pcs\",\n  \"price\": \"19.00\",\n  \"quantity\": 1,\n  \"line_total\": \"19.00\"\n}"
+                },
+                {
+                  "name": "422 Unprocessable Entity — Unavailable",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch_menu_item_id\": {{branch_menu_item_id}}\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "items"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"This item is not available.\"\n}"
+                },
+                {
+                  "name": "404 Not Found — Cart missing",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch_menu_item_id\": {{branch_menu_item_id}}\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "items"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Cart not found\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Update Cart Item Quantity",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity\": 3\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/carts/{{cart_id}}/items/{{item_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "{{cart_id}}",
+                    "items",
+                    "{{item_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cart_id",
+                      "value": "1",
+                      "description": "Cart ID"
+                    },
+                    {
+                      "key": "item_id",
+                      "value": "1",
+                      "description": "CartItem ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"quantity\": 3\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/items/{{item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "items",
+                        "{{item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        },
+                        {
+                          "key": "item_id",
+                          "value": "1",
+                          "description": "CartItem ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"branch_menu_item_id\": {{branch_menu_item_id}},\n  \"name\": \"Broasted Chicken — 4 Pcs\",\n  \"price\": \"19.00\",\n  \"quantity\": 3,\n  \"line_total\": \"57.00\"\n}"
+                },
+                {
+                  "name": "422 Unprocessable Entity — Quantity <= 0",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"quantity\": 3\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/items/{{item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "items",
+                        "{{item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        },
+                        {
+                          "key": "item_id",
+                          "value": "1",
+                          "description": "CartItem ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Quantity must be greater than 0. Use DELETE to remove the item.\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Remove Cart Item",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/carts/{{cart_id}}/items/{{item_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "{{cart_id}}",
+                    "items",
+                    "{{item_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cart_id",
+                      "value": "1",
+                      "description": "Cart ID"
+                    },
+                    {
+                      "key": "item_id",
+                      "value": "1",
+                      "description": "CartItem ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "204 No Content",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/items/{{item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "items",
+                        "{{item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        },
+                        {
+                          "key": "item_id",
+                          "value": "1",
+                          "description": "CartItem ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "Text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "404 Not Found — Item not in cart",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/carts/{{cart_id}}/items/{{item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "carts",
+                        "{{cart_id}}",
+                        "items",
+                        "{{item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cart_id",
+                          "value": "1",
+                          "description": "Cart ID"
+                        },
+                        {
+                          "key": "item_id",
+                          "value": "1",
+                          "description": "CartItem ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"Cart item not found\"\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Branches",
+          "item": [
+            {
+              "name": "List Branches",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Branches</title></head>\n  <body>\n    <h1>Branches</h1>\n    <table>\n      <tr><th>Name</th><th>Address</th><th>Actions</th></tr>\n      <tr><td>Albaik — Jeddah Al Andalus</td><td>Al Andalus District...</td><td>Show | Edit | Delete</td></tr>\n    </table>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Show Branch",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Albaik — Jeddah Al Andalus</title></head>\n  <body>\n    <h1>Albaik — Jeddah Al Andalus</h1>\n    <p>Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA</p>\n    <p>Latitude: 21.543333 | Longitude: 39.172778</p>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "New Branch Form",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "new"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/new",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "new"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>New Branch</title></head>\n  <body>\n    <h1>New Branch</h1>\n    <form action=\"/branches\" method=\"post\">\n      <input name=\"branch[name]\" placeholder=\"e.g. Albaik — Jeddah Al Andalus\">\n      <input name=\"branch[address]\" placeholder=\"Full street address\">\n      <input name=\"branch[latitude]\" placeholder=\"e.g. 21.543333\">\n      <input name=\"branch[longitude]\" placeholder=\"e.g. 39.172778\">\n      <button type=\"submit\">Create Branch</button>\n    </form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Create Branch",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Jeddah Al Andalus\",\n    \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n    \"latitude\": 21.543333,\n    \"longitude\": 39.172778\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/branches",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "302 Found — Redirect to branch",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Jeddah Al Andalus\",\n    \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n    \"latitude\": 21.543333,\n    \"longitude\": 39.172778\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/branches",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches"
+                      ]
+                    }
+                  },
+                  "status": "Found",
+                  "code": 302,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/branches/1"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "422 Unprocessable Entity — Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Jeddah Al Andalus\",\n    \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n    \"latitude\": 21.543333,\n    \"longitude\": 39.172778\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/branches",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>New Branch</title></head>\n  <body>\n    <div class=\"error\">Name can't be blank</div>\n    <form action=\"/branches\" method=\"post\">...</form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Edit Branch Form",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}/edit",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}",
+                    "edit"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/edit",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "edit"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Edit Branch</title></head>\n  <body>\n    <h1>Edit Branch</h1>\n    <form action=\"/branches/1\" method=\"post\">\n      <input type=\"hidden\" name=\"_method\" value=\"patch\">\n      <input name=\"branch[name]\" value=\"Albaik — Jeddah Al Andalus\">\n      <input name=\"branch[address]\" value=\"Al Andalus District...\">\n      <input name=\"branch[latitude]\" value=\"21.543333\">\n      <input name=\"branch[longitude]\" value=\"39.172778\">\n      <button type=\"submit\">Save Changes</button>\n    </form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Update Branch",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Jeddah Al Andalus (Updated)\",\n    \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n    \"latitude\": 21.543333,\n    \"longitude\": 39.172778\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "302 Found — Redirect to branch",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Jeddah Al Andalus (Updated)\",\n    \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n    \"latitude\": 21.543333,\n    \"longitude\": 39.172778\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Found",
+                  "code": 302,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/branches/1"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "422 Unprocessable Entity — Validation error",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch\": {\n    \"name\": \"Albaik — Jeddah Al Andalus (Updated)\",\n    \"address\": \"Al Andalus District, Prince Mohammed bin Abdulaziz St, Jeddah 23326, KSA\",\n    \"latitude\": 21.543333,\n    \"longitude\": 39.172778\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Edit Branch</title></head>\n  <body>\n    <div class=\"error\">Address can't be blank</div>\n    <form action=\"/branches/1\" method=\"post\">...</form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Delete Branch",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "303 See Other — Redirect to branches list",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "See Other",
+                  "code": 303,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/branches"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Branch Menu (Admin)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}/menu",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}",
+                    "menu"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/menu",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "menu"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Branch Menu</title></head>\n  <body>\n    <h1>Menu for Albaik — Jeddah Al Andalus</h1>\n    <table>\n      <tr><th>Item</th><th>Price</th><th>Available</th><th>Actions</th></tr>\n      <tr><td>Broasted Chicken — 4 Pcs</td><td>19.00</td><td>Yes</td><td>Edit | Delete</td></tr>\n    </table>\n  </body>\n</html>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Menu Items",
+          "item": [
+            {
+              "name": "List Menu Items",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/menu_items",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "menu_items"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/menu_items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Menu Items</title></head>\n  <body>\n    <h1>Menu Items</h1>\n    <table>\n      <tr><th>Name</th><th>Description</th><th>Available</th><th>Actions</th></tr>\n      <tr><td>Broasted Chicken — 4 Pcs</td><td>Crispy golden broasted chicken...</td><td>Yes</td><td>Show | Edit | Delete</td></tr>\n    </table>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Show Menu Item",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/menu_items/{{menu_item_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "menu_items",
+                    "{{menu_item_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "menu_item_id",
+                      "value": "1",
+                      "description": "Menu Item ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/menu_items/{{menu_item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items",
+                        "{{menu_item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "menu_item_id",
+                          "value": "1",
+                          "description": "Menu Item ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Broasted Chicken — 4 Pcs</title></head>\n  <body>\n    <h1>Broasted Chicken — 4 Pcs</h1>\n    <p>Crispy golden broasted chicken, 4 pieces with signature garlic sauce</p>\n    <p>Available by default: Yes</p>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "New Menu Item Form",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/menu_items/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "menu_items",
+                    "new"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/menu_items/new",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items",
+                        "new"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>New Menu Item</title></head>\n  <body>\n    <h1>New Menu Item</h1>\n    <form action=\"/menu_items\" method=\"post\">\n      <input name=\"menu_item[name]\" placeholder=\"e.g. Broasted Chicken — 4 Pcs\">\n      <input name=\"menu_item[description]\" placeholder=\"Short description of the item\">\n      <input type=\"checkbox\" name=\"menu_item[base_availability]\" value=\"1\">\n      <button type=\"submit\">Create Item</button>\n    </form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Create Menu Item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"Broasted Chicken — 4 Pcs\",\n    \"description\": \"Crispy golden broasted chicken, 4 pieces with signature garlic sauce\",\n    \"base_availability\": true\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/menu_items",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "menu_items"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "302 Found — Redirect to menu item",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"menu_item\": {\n    \"name\": \"Broasted Chicken — 4 Pcs\",\n    \"description\": \"Crispy golden broasted chicken, 4 pieces with signature garlic sauce\",\n    \"base_availability\": true\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/menu_items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items"
+                      ]
+                    }
+                  },
+                  "status": "Found",
+                  "code": 302,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/menu_items/1"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "422 Unprocessable Entity — Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"menu_item\": {\n    \"name\": \"Broasted Chicken — 4 Pcs\",\n    \"description\": \"Crispy golden broasted chicken, 4 pieces with signature garlic sauce\",\n    \"base_availability\": true\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/menu_items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>New Menu Item</title></head>\n  <body>\n    <div class=\"error\">Name can't be blank</div>\n    <form action=\"/menu_items\" method=\"post\">...</form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Edit Menu Item Form",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/menu_items/{{menu_item_id}}/edit",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "menu_items",
+                    "{{menu_item_id}}",
+                    "edit"
+                  ],
+                  "variable": [
+                    {
+                      "key": "menu_item_id",
+                      "value": "1",
+                      "description": "Menu Item ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/menu_items/{{menu_item_id}}/edit",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items",
+                        "{{menu_item_id}}",
+                        "edit"
+                      ],
+                      "variable": [
+                        {
+                          "key": "menu_item_id",
+                          "value": "1",
+                          "description": "Menu Item ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Edit Menu Item</title></head>\n  <body>\n    <h1>Edit Menu Item</h1>\n    <form action=\"/menu_items/1\" method=\"post\">\n      <input type=\"hidden\" name=\"_method\" value=\"patch\">\n      <input name=\"menu_item[name]\" value=\"Broasted Chicken — 4 Pcs\">\n      <input name=\"menu_item[description]\" value=\"Crispy golden broasted chicken...\">\n      <input type=\"checkbox\" name=\"menu_item[base_availability]\" value=\"1\" checked>\n      <button type=\"submit\">Save Changes</button>\n    </form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Update Menu Item",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"menu_item\": {\n    \"name\": \"Broasted Chicken — 4 Pcs (Updated)\",\n    \"description\": \"Crispy golden broasted chicken, 4 pieces with signature garlic sauce\",\n    \"base_availability\": true\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/menu_items/{{menu_item_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "menu_items",
+                    "{{menu_item_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "menu_item_id",
+                      "value": "1",
+                      "description": "Menu Item ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "302 Found — Redirect to menu item",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"menu_item\": {\n    \"name\": \"Broasted Chicken — 4 Pcs (Updated)\",\n    \"description\": \"Crispy golden broasted chicken, 4 pieces with signature garlic sauce\",\n    \"base_availability\": true\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/menu_items/{{menu_item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items",
+                        "{{menu_item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "menu_item_id",
+                          "value": "1",
+                          "description": "Menu Item ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Found",
+                  "code": 302,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/menu_items/1"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Delete Menu Item",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/menu_items/{{menu_item_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "menu_items",
+                    "{{menu_item_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "menu_item_id",
+                      "value": "1",
+                      "description": "Menu Item ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "303 See Other — Redirect to menu items list",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/menu_items/{{menu_item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "menu_items",
+                        "{{menu_item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "menu_item_id",
+                          "value": "1",
+                          "description": "Menu Item ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "See Other",
+                  "code": 303,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/menu_items"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Branch Menu Items",
+          "item": [
+            {
+              "name": "New Branch Menu Item Form",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}",
+                    "branch_menu_items",
+                    "new"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/new",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "branch_menu_items",
+                        "new"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>New Branch Menu Item</title></head>\n  <body>\n    <h1>New Branch Menu Item</h1>\n    <form action=\"/branches/1/branch_menu_items\" method=\"post\">\n      <select name=\"branch_menu_item[menu_item_id]\">...</select>\n      <input name=\"branch_menu_item[menu_item_price]\" placeholder=\"e.g. 19.00\">\n      <input type=\"checkbox\" name=\"branch_menu_item[menu_item_availability]\" value=\"1\">\n      <button type=\"submit\">Add Item</button>\n    </form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Create Branch Menu Item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branch_menu_item\": {\n    \"menu_item_id\": {{menu_item_id}},\n    \"menu_item_price\": 19.00,\n    \"menu_item_availability\": true\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}",
+                    "branch_menu_items"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "302 Found — Redirect to branch menu",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch_menu_item\": {\n    \"menu_item_id\": {{menu_item_id}},\n    \"menu_item_price\": 19.00,\n    \"menu_item_availability\": true\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "branch_menu_items"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Found",
+                  "code": 302,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/branches/1/menu"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "422 Unprocessable Entity — Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch_menu_item\": {\n    \"menu_item_id\": {{menu_item_id}},\n    \"menu_item_price\": 19.00,\n    \"menu_item_availability\": true\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "branch_menu_items"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity",
+                  "code": 422,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>New Branch Menu Item</title></head>\n  <body>\n    <div class=\"error\">Menu item price must be greater than 0</div>\n    <form action=\"/branches/1/branch_menu_items\" method=\"post\">...</form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Edit Branch Menu Item Form",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/{{branch_menu_item_id}}/edit",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}",
+                    "branch_menu_items",
+                    "{{branch_menu_item_id}}",
+                    "edit"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    },
+                    {
+                      "key": "branch_menu_item_id",
+                      "value": "1",
+                      "description": "Branch Menu Item ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/{{branch_menu_item_id}}/edit",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "branch_menu_items",
+                        "{{branch_menu_item_id}}",
+                        "edit"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        },
+                        {
+                          "key": "branch_menu_item_id",
+                          "value": "1",
+                          "description": "Branch Menu Item ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Edit Branch Menu Item</title></head>\n  <body>\n    <h1>Edit Branch Menu Item</h1>\n    <form action=\"/branches/1/branch_menu_items/1\" method=\"post\">\n      <input type=\"hidden\" name=\"_method\" value=\"patch\">\n      <select name=\"branch_menu_item[menu_item_id]\">...</select>\n      <input name=\"branch_menu_item[menu_item_price]\" value=\"19.00\">\n      <input type=\"checkbox\" name=\"branch_menu_item[menu_item_availability]\" value=\"1\" checked>\n      <button type=\"submit\">Save Changes</button>\n    </form>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Update Branch Menu Item",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branch_menu_item\": {\n    \"menu_item_id\": {{menu_item_id}},\n    \"menu_item_price\": 21.00,\n    \"menu_item_availability\": true\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/{{branch_menu_item_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}",
+                    "branch_menu_items",
+                    "{{branch_menu_item_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    },
+                    {
+                      "key": "branch_menu_item_id",
+                      "value": "1",
+                      "description": "Branch Menu Item ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "302 Found — Redirect to branch menu",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branch_menu_item\": {\n    \"menu_item_id\": {{menu_item_id}},\n    \"menu_item_price\": 21.00,\n    \"menu_item_availability\": true\n  }\n}"
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/{{branch_menu_item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "branch_menu_items",
+                        "{{branch_menu_item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        },
+                        {
+                          "key": "branch_menu_item_id",
+                          "value": "1",
+                          "description": "Branch Menu Item ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Found",
+                  "code": 302,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/branches/1/menu"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Delete Branch Menu Item",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  },
+                  {
+                    "key": "X-CSRF-Token",
+                    "value": "{{X-CSRF-Token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/{{branch_menu_item_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "branches",
+                    "{{branch_id}}",
+                    "branch_menu_items",
+                    "{{branch_menu_item_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "branch_id",
+                      "value": "1",
+                      "description": "Branch ID"
+                    },
+                    {
+                      "key": "branch_menu_item_id",
+                      "value": "1",
+                      "description": "Branch Menu Item ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "303 See Other — Redirect to branch menu",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      },
+                      {
+                        "key": "X-CSRF-Token",
+                        "value": "{{X-CSRF-Token}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/branches/{{branch_id}}/branch_menu_items/{{branch_menu_item_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "branches",
+                        "{{branch_id}}",
+                        "branch_menu_items",
+                        "{{branch_menu_item_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "branch_id",
+                          "value": "1",
+                          "description": "Branch ID"
+                        },
+                        {
+                          "key": "branch_menu_item_id",
+                          "value": "1",
+                          "description": "Branch Menu Item ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "See Other",
+                  "code": 303,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Location",
+                      "value": "http://localhost:3000/branches/1/menu"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "List Orders",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/orders",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/orders",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "orders"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Orders</title></head>\n  <body>\n    <h1>Orders</h1>\n    <table>\n      <tr><th>ID</th><th>Branch</th><th>Type</th><th>Status</th><th>Total</th><th>Actions</th></tr>\n      <tr><td>5</td><td>Albaik — Jeddah Al Andalus</td><td>pickup</td><td>pending</td><td>38.00</td><td>Show</td></tr>\n    </table>\n  </body>\n</html>"
+                }
+              ]
+            },
+            {
+              "name": "Show Order",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/orders/{{order_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "orders",
+                    "{{order_id}}"
+                  ],
+                  "variable": [
+                    {
+                      "key": "order_id",
+                      "value": "1",
+                      "description": "Order ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/html"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/orders/{{order_id}}",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "orders",
+                        "{{order_id}}"
+                      ],
+                      "variable": [
+                        {
+                          "key": "order_id",
+                          "value": "1",
+                          "description": "Order ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "Text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/html; charset=utf-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "<!DOCTYPE html>\n<html>\n  <head><title>Order #5</title></head>\n  <body>\n    <h1>Order #5</h1>\n    <p>Branch: Albaik — Jeddah Al Andalus</p>\n    <p>Type: pickup | Status: pending | Total: 38.00</p>\n    <table>\n      <tr><th>Item</th><th>Price</th><th>Qty</th></tr>\n      <tr><td>Broasted Chicken — 4 Pcs</td><td>19.00</td><td>2</td></tr>\n    </table>\n  </body>\n</html>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "X-CSRF-Token",
+      "value": ""
+    },
+    {
+      "key": "cart_id",
+      "value": "1"
+    },
+    {
+      "key": "branch_id",
+      "value": "1"
+    },
+    {
+      "key": "item_id",
+      "value": "1"
+    },
+    {
+      "key": "menu_item_id",
+      "value": "1"
+    },
+    {
+      "key": "branch_menu_item_id",
+      "value": "1"
+    },
+    {
+      "key": "order_id",
+      "value": "1"
+    }
+  ]
+}
